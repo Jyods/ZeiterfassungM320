@@ -92,10 +92,10 @@ namespace ZeiterfassungM320
                     string arbeit = Console.ReadLine();
                     Console.WriteLine("Geben Sie die Anzahl an verfügbarem Urlaub ein:");
                     int urlaub = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine("Geben Sie die Arbeitszeit des Mitarbeiters ein:");
-                    int arbeitszeit = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Geben Sie die Überzeit des Mitarbeiters ein:");
+                    int überzeit = Convert.ToInt32(Console.ReadLine());
                     // Neues Mitarbeiter-Objekt erstellen und zur Liste hinzufügen
-                    mitarbeiterListe.Add(new Mitarbeiter(name, alter, arbeit, urlaub, arbeitszeit));
+                    mitarbeiterListe.Add(new Mitarbeiter(name, alter, arbeit, urlaub, überzeit));
                     Console.Clear();
                 }
                 else if (input == "4")
@@ -105,7 +105,7 @@ namespace ZeiterfassungM320
                     Console.WriteLine("Welche Statistik möchten Sie anzeigen?");
                     Console.WriteLine("1. Durchschnittsalter");
                     Console.WriteLine("2. Berufe");
-                    Console.WriteLine("3. Durchschnittliche Arbeitszeit");
+                    Console.WriteLine("3. Durchschnittliche Überzeit");
 
                     // Eingabe des Benutzers einlesen
                     string statistik = Console.ReadLine();
@@ -153,7 +153,7 @@ namespace ZeiterfassungM320
                     else if (statistik == "3")
                     {
                         Console.Clear();
-                        Console.WriteLine("Wollen Sie die durchschnittliche Arbeitszeit von allen Mitarbeitern oder nur von Mitarbeitern eines bestimmten Berufs anzeigen?");
+                        Console.WriteLine("Wollen Sie die durchschnittliche Überzeit von allen Mitarbeitern oder nur von Mitarbeitern eines bestimmten Berufs anzeigen?");
                         Console.WriteLine("1. Aller Mitarbeiter");
                         Console.WriteLine("2. Mitarbeiter eines bestimmten Berufs");
 
@@ -162,41 +162,41 @@ namespace ZeiterfassungM320
 
                         if (auswahl == "1")
                         {
-                            // Durchschnittliche Arbeitszeit von allen Mitarbeitern berechnen
+                            // Durchschnittliche Überzeit von allen Mitarbeitern berechnen
                             int summe = 0;
                             foreach (Mitarbeiter mitarbeiter in mitarbeiterListe)
                             {
-                                summe += mitarbeiter.Arbeitszeit;
+                                summe += mitarbeiter.Überzeit;
                             }
 
                             double durchschnitt = (double)summe / mitarbeiterListe.Count;
                             Console.Clear();
-                            Console.WriteLine($"Die durchschnittliche Arbeitszeit aller Mitarbeiter beträgt {durchschnitt:F2} Stunden.");
+                            Console.WriteLine($"Die durchschnittliche Überzeit aller Mitarbeiter beträgt {durchschnitt:F2} Stunden.");
                             Console.ReadKey();
                             Console.Clear();
                         }
                         else if (auswahl == "2")
                         {
-                            // Dictionary, das die Berufe mit der Gesamtarbeitszeit der Mitarbeiter, die den gleichen Beruf haben, verknüpft
-                            Dictionary<string, int> arbeitszeit = new Dictionary<string, int>();
+                            // Dictionary, das die Berufe mit der GesamtÜberzeit der Mitarbeiter, die den gleichen Beruf haben, verknüpft
+                            Dictionary<string, int> Überzeit = new Dictionary<string, int>();
 
                             foreach (Mitarbeiter mitarbeiter in mitarbeiterListe)
                             {
-                                if (arbeitszeit.ContainsKey(mitarbeiter.Arbeit))
+                                if (Überzeit.ContainsKey(mitarbeiter.Arbeit))
                                 {
-                                    arbeitszeit[mitarbeiter.Arbeit] += mitarbeiter.Arbeitszeit;
+                                    Überzeit[mitarbeiter.Arbeit] += mitarbeiter.Überzeit;
                                 }
                                 else
                                 {
-                                    arbeitszeit[mitarbeiter.Arbeit] = mitarbeiter.Arbeitszeit;
+                                    Überzeit[mitarbeiter.Arbeit] = mitarbeiter.Überzeit;
                                 }
                             }
 
                             Console.Clear();
-                            Console.WriteLine("Durchschnittliche Arbeitszeit pro Beruf:");
-                            foreach (KeyValuePair<string, int> entry in arbeitszeit)
+                            Console.WriteLine("Durchschnittliche Überzeit pro Beruf:");
+                            foreach (KeyValuePair<string, int> entry in Überzeit)
                             {
-                                int anzahl = arbeitszeit[entry.Key];
+                                int anzahl = Überzeit[entry.Key];
                                 double durchschnitt = (double)entry.Value / anzahl;
                                 Console.WriteLine($"{entry.Key}: {durchschnitt:F2} Stunden");
                             }

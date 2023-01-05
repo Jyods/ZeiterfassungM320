@@ -14,22 +14,22 @@ namespace ZeiterfassungM320
             public int Alter { get; set; }
             public string Arbeit { get; set; }
             public int Urlaub { get; set; }
-            public int Arbeitszeit { get; set; }
+            public int Überzeit { get; set; }
 
             // Konstruktor für die Klasse Mitarbeiter
-            public Mitarbeiter(string name, int alter, string arbeit, int urlaub, int arbeitszeit)
+            public Mitarbeiter(string name, int alter, string arbeit, int urlaub, int überzeit)
             {
                 Name = name;
                 Alter = alter;
                 Arbeit = arbeit;
                 Urlaub = urlaub;
-                Arbeitszeit = arbeitszeit;
+                Überzeit = überzeit;
             }
 
             // Methode zum Hinzufügen von Arbeitszeit
-            public void AddArbeitszeit(int arbeitszeit)
+            public void AddArbeitszeit(int überzeit)
             {
-                Arbeitszeit += arbeitszeit;
+                Überzeit += überzeit;
             }
 
         public void SubtractUrlaub(int urlaub)
