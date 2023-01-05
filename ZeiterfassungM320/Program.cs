@@ -245,17 +245,43 @@ namespace ZeiterfassungM320
                     else if (auswahl == "2")
                     {
                         Console.Clear();
-                        Console.WriteLine("Bitte geben Sie den Pfad für die zu erstellende JSON-Datei an:");
-
-                        // Pfad für die zu erstellende JSON-Datei einlesen
-                        string pfad = Console.ReadLine();
-
                         // Serialisieren der Mitarbeiter-Objekte in JSON-Format
                         string json = JsonConvert.SerializeObject(mitarbeiterListe);
 
-                        // Speichern der JSON-Datei
-                        File.WriteAllText(pfad, json);
-                        Console.WriteLine($"JSON wurde unter {pfad} erstellt.");
+                        // Benutzer auffordern, einen Namen für die JSON-Datei anzugeben
+                        string dateiname = "";
+                        int zaehler = 1;
+                        while (true)
+                        {
+                            Console.WriteLine("Bitte geben Sie einen Namen für die JSON-Datei an:");
+                            dateiname = Console.ReadLine();
+
+                            // .json an den Dateinamen anhängen, falls nicht bereits vorhanden
+                            if (!dateiname.EndsWith(".json"))
+                            {
+                                dateiname += ".json";
+                            }
+
+                            // Pfad für die JSON-Datei erstellen
+                            string pfad = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), dateiname);
+
+                            // Überprüfen, ob die Datei bereits existiert
+                            if (!File.Exists(pfad))
+                            {
+                                // Datei speichern
+                                File.WriteAllText(pfad, json);
+                                Console.WriteLine($"JSON wurde unter {pfad} erstellt.");
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Eine Datei mit dem Namen '{0}' existiert bereits auf dem Desktop.", dateiname);
+                                Console.WriteLine("Bitte wählen Sie einen anderen Namen oder löschen Sie die existierende Datei.");
+
+                                // Zähler erhöhen, um an den Dateinamen anhängen zu können, falls erneut eine Datei mit demselben Namen existiert
+                                zaehler++;
+                            }
+                        }
                         Console.ReadKey();
                         Console.Clear();
                     }
