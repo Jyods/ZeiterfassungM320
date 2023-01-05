@@ -253,6 +253,7 @@ namespace ZeiterfassungM320
                         int zaehler = 1;
                         while (true)
                         {
+                            Console.Clear();
                             Console.WriteLine("Bitte geben Sie einen Namen für die JSON-Datei an:");
                             dateiname = Console.ReadLine();
 
@@ -270,6 +271,7 @@ namespace ZeiterfassungM320
                             {
                                 // Datei speichern
                                 File.WriteAllText(pfad, json);
+                                Console.Clear();
                                 Console.WriteLine($"JSON wurde unter {pfad} erstellt.");
                                 break;
                             }
@@ -277,6 +279,7 @@ namespace ZeiterfassungM320
                             {
                                 Console.WriteLine("Eine Datei mit dem Namen '{0}' existiert bereits auf dem Desktop.", dateiname);
                                 Console.WriteLine("Bitte wählen Sie einen anderen Namen oder löschen Sie die existierende Datei.");
+                                Console.WriteLine();
 
                                 // Zähler erhöhen, um an den Dateinamen anhängen zu können, falls erneut eine Datei mit demselben Namen existiert
                                 zaehler++;
