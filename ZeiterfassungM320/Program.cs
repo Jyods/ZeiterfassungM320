@@ -2,357 +2,228 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using Zeiterfassungsprogramm;
 
-namespace ZeiterfassungM320
+namespace Zeiterfassung
 {
     class Program
     {
-
         static void Main(string[] args)
         {
+            // Mitarbeiter erstellen
             List<Mitarbeiter> mitarbeiterListe = new List<Mitarbeiter>();
-            // Mitarbeiter-Objekte zur Liste hinzufügen
-            mitarbeiterListe.Add(new Mitarbeiter("Max Mustermann", 30, "Programmierer", 20, 160));
-            mitarbeiterListe.Add(new Mitarbeiter("Anna Mustermann", 28, "Designer", 10, 120));
+            mitarbeiterListe.Add(new Mitarbeiter("Max Mustermann", 30, "Entwickler", 20, 160));
+            mitarbeiterListe.Add(new Mitarbeiter("Erika Mustermann", 25, "Projektmanager", 25, 175));
+            mitarbeiterListe.Add(new Mitarbeiter("Jon Doe", 35, "CEO", 30, 200));
 
-            while (true)
+            bool beenden = false;
+            while (!beenden)
             {
-                Console.WriteLine("Bitte wählen Sie eine Option aus:");
-                Console.WriteLine("1. Urlaub modifizieren");
-                Console.WriteLine("2. Mitarbeiter mit verfügbarem Urlaub auflisten");
-                Console.WriteLine("3. Neuen Mitarbeiter hinzufügen");
+                // Menü anzeigen
+                Console.WriteLine("Zeiterfassungsprogramm");
+                Console.WriteLine("1. Urlaub verwalten");
+                Console.WriteLine("2. Mitarbeiter mit verfügbarem Resturlaub anzeigen");
+                Console.WriteLine("3. Mitarbeiter hinzufügen");
                 Console.WriteLine("4. Statistik anzeigen");
-                Console.WriteLine("5. Mitarbeiter Löschen");
-                Console.WriteLine("9. Mitarbeiterdaten importieren/exportieren");
+                Console.WriteLine("5. Mitarbeiter löschen");
+                Console.WriteLine("9. Mitarbeiter-Daten aus JSON-Datei einlesen oder speichern");
+                Console.WriteLine("0. Beenden");
+                Console.Write("Auswahl: ");
 
-                // Eingabe des Benutzers einlesen
-                string input = Console.ReadLine();
-
-                // Überprüfen, ob die Eingabe gültig ist
-                if (input == "1")
+                // Eingabe auswerten
+                int auswahl = int.Parse(Console.ReadLine());
+                switch (auswahl)
                 {
-                    Console.Clear();
-                    // Code für die Option "Urlaub modifizieren"
-                    Console.WriteLine("Wählen Sie den Mitarbeiter aus, dessen Urlaub modifiziert werden soll:");
-                    int index = 1;
-                    foreach (Mitarbeiter mitarbeiter in mitarbeiterListe)
-                    {
-                        Console.WriteLine($"{index}. {mitarbeiter.Name}");
-                        index++;
-                    }
-
-                    int auswahl = Convert.ToInt32(Console.ReadLine());
-                    if (auswahl > 0 && auswahl <= mitarbeiterListe.Count)
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Möchten Sie dem Mitarbeiter Urlaub abziehen oder hinzufügen? (a/h)");
-                        string eingabe = Console.ReadLine();
-                        if (eingabe == "a")
+                    case 1:
+                        // Urlaub verwalten
+                        Console.WriteLine("1. Urlaub abziehen");
+                        Console.WriteLine("2. Urlaub hinzufügen");
+                        Console.Write("Auswahl: ");
+                        int urlaubAuswahl = int.Parse(Console.ReadLine());
+                        if (urlaubAuswahl == 1)
                         {
-                            Console.Clear();
-                            Console.WriteLine("Wie viele Urlaubstage sollen abgezogen werden?");
-                            int urlaub = Convert.ToInt32(Console.ReadLine());
-                            mitarbeiterListe[auswahl - 1].SubtractUrlaub(urlaub);
-                            Console.Clear();
+                            // Mitarbeiter auswählen
+                            Console.WriteLine("Mitarbeiter auswählen:");
+                            for (int i = 0; i < mitarbeiterListe.Count; i++)
+                            {
+                                Console.WriteLine($"{i + 1}. {mitarbeiterListe[i].Name} ({mitarbeiterListe[i].Urlaub} Urlaubstage verfügbar)");
+                            }
+                            Console.Write("Auswahl: ");
+                            int mitarbeiterAuswahl = int.Parse(Console.ReadLine()) - 1;
+
+                            // Anzahl der Urlaubstage abziehen
+                            Console.Write("Anzahl der Urlaubstage: ");
+                            int urlaubstage = int.Parse(Console.ReadLine());
+                            mitarbeiterListe[mitarbeiterAuswahl].UrlaubAbziehen(urlaubstage);
+                            Console.WriteLine($"{urlaubstage} Urlaubstage wurden von {mitarbeiterListe[mitarbeiterAuswahl].Name} abgezogen.");
                         }
-                        else if (eingabe == "h")
+                        else if (urlaubAuswahl == 2)
                         {
-                            Console.Clear();
-                            Console.WriteLine("Wie viele Urlaubstage sollen hinzugefügt werden?");
-                            int urlaub = Convert.ToInt32(Console.ReadLine());
-                            mitarbeiterListe[auswahl - 1].AddUrlaub(urlaub);
-                            Console.Clear();
+                            // Mitarbeiter auswählen
+                            Console.WriteLine("Mitarbeiter auswählen:");
+                            for (int i = 0; i < mitarbeiterListe.Count; i++)
+                            {
+                                Console.WriteLine($"{i + 1}. {mitarbeiterListe[i].Name} ({mitarbeiterListe[i].Urlaub} Urlaubstage verfügbar)");
+                            }
+                            Console.Write("Auswahl: ");
+                            int mitarbeiterAuswahl = int.Parse(Console.ReadLine()) - 1;
+
+                            // Anzahl der Urlaubstage hinzufügen
+                            Console.Write("Anzahl der Urlaubstage: ");
+                            int urlaubstage = int.Parse(Console.ReadLine());
+                            mitarbeiterListe[mitarbeiterAuswahl].UrlaubHinzufuegen(urlaubstage);
+                            //Console.WriteLine($"{ur mitarbeiterListe[mitarbeiterAuswahl].UrlaubAbziehen(urlaubstage);
+                            Console.WriteLine($"{urlaubstage} Urlaubstage wurden von {mitarbeiterListe[mitarbeiterAuswahl].Name} abgezogen.");
                         }
-                        else
+                        else if (urlaubAuswahl == 2)
                         {
-                            Console.Clear();
-                            Console.WriteLine("Ungültige Eingabe. Bitte versuchen Sie es erneut.");
+                            // Mitarbeiter auswählen
+                            Console.WriteLine("Mitarbeiter auswählen:");
+                            for (int i = 0; i < mitarbeiterListe.Count; i++)
+                            {
+                                Console.WriteLine($"{i + 1}. {mitarbeiterListe[i].Name} ({mitarbeiterListe[i].Urlaub} Urlaubstage verfügbar)");
+                            }
+                            Console.Write("Auswahl: ");
+                            int mitarbeiterAuswahl = int.Parse(Console.ReadLine()) - 1;
+
+                            // Anzahl der Urlaubstage hinzufügen
+                            Console.Write("Anzahl der Urlaubstage: ");
+                            int urlaubstage = int.Parse(Console.ReadLine());
+                            mitarbeiterListe[mitarbeiterAuswahl].UrlaubHinzufuegen(urlaubstage);
+                            Console.WriteLine($"{urlaubstage} Urlaubstage wurden zu {mitarbeiterListe[mitarbeiterAuswahl].Name} hinzugefügt.");
                         }
-                    }
-                    else
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Ungültige Auswahl. Bitte versuchen Sie es erneut.");
-                    }
-                }
-
-                else if (input == "2")
-                {
-                    Console.Clear();
-                    UrlaubAnzeigen(mitarbeiterListe);
-                }
-                else if (input == "3")
-                {
-                    Console.Clear();
-                    // Code für die Option "Neuen Mitarbeiter hinzufügen"
-                    Console.WriteLine("Geben Sie den Namen des Mitarbeiters ein:");
-                    string name = Console.ReadLine();
-                    Console.WriteLine("Geben Sie das Alter des Mitarbeiters ein:");
-                    int alter = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine("Geben Sie den Beruf des Mitarbeiters ein:");
-                    string arbeit = Console.ReadLine();
-                    Console.WriteLine("Geben Sie die Anzahl an verfügbarem Urlaub ein:");
-                    int urlaub = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine("Geben Sie die Überzeit des Mitarbeiters ein:");
-                    int überzeit = Convert.ToInt32(Console.ReadLine());
-                    // Neues Mitarbeiter-Objekt erstellen und zur Liste hinzufügen
-                    mitarbeiterListe.Add(new Mitarbeiter(name, alter, arbeit, urlaub, überzeit));
-                    Console.Clear();
-                }
-                else if (input == "4")
-                {
-                    Console.Clear();
-                    // Code für die Option "Statistik anzeigen"
-                    Console.WriteLine("Welche Statistik möchten Sie anzeigen?");
-                    Console.WriteLine("1. Durchschnittsalter");
-                    Console.WriteLine("2. Berufe");
-                    Console.WriteLine("3. Durchschnittliche Überzeit");
-
-                    // Eingabe des Benutzers einlesen
-                    string statistik = Console.ReadLine();
-
-                    if (statistik == "1")
-                    {
-                        int summe = 0;
+                        break;
+                    case 2:
+                        // Mitarbeiter mit verfügbarem Resturlaub anzeigen
                         foreach (Mitarbeiter mitarbeiter in mitarbeiterListe)
                         {
-                            summe += mitarbeiter.Alter;
-                        }
-
-                        double durchschnitt = (double)summe / mitarbeiterListe.Count;
-
-                        Console.Clear();
-                        Console.WriteLine($"Das Durchschnittsalter aller Mitarbeiter beträgt {durchschnitt:F2} Jahre.");
-                        Console.ReadKey();
-                        Console.Clear();
-                    }
-                    else if (statistik == "2")
-                    {
-                        // Dictionary, das die Arten von Arbeit mit der Anzahl der Mitarbeiter, die die gleiche Art von Arbeit haben, verknüpft
-                        Dictionary<string, int> arbeit = new Dictionary<string, int>();
-
-                        foreach (Mitarbeiter mitarbeiter in mitarbeiterListe)
-                        {
-                            if (arbeit.ContainsKey(mitarbeiter.Arbeit))
+                            if (mitarbeiter.Urlaub > 0)
                             {
-                                arbeit[mitarbeiter.Arbeit]++;
-                            }
-                            else
-                            {
-                                arbeit[mitarbeiter.Arbeit] = 1;
+                                Console.WriteLine($"{mitarbeiter.Name} ({mitarbeiter.Urlaub} Urlaubstage verfügbar)");
                             }
                         }
-
-                        Console.Clear();
-                        Console.WriteLine("Arten von Arbeit:");
-                        foreach (KeyValuePair<string, int> entry in arbeit)
+                        break;
+                    case 3:
+                        // Mitarbeiter hinzufügen
+                        Console.Write("Name: ");
+                        string name = Console.ReadLine();
+                        Console.Write("Alter: ");
+                        int alter = int.Parse(Console.ReadLine());
+                        Console.Write("Arbeit: ");
+                        string arbeit = Console.ReadLine();
+                        Console.Write("Urlaub: ");
+                        int urlaub = int.Parse(Console.ReadLine());
+                        Console.Write("Arbeitsstunden: ");
+                        int arbeitsstunden = int.Parse(Console.ReadLine());
+                        mitarbeiterListe.Add(new Mitarbeiter(name, alter, arbeit, urlaub, arbeitsstunden));
+                        Console.WriteLine("Mitarbeiter hinzugefügt.");
+                        break;
+                    case 4:
+                        // Statistik anzeigen
+                        Console.WriteLine("1. Durchschnittsalter aller Mitarbeiter");
+                        Console.WriteLine("2. Anzahl der Mitarbeiter pro Beruf");
+                        Console.WriteLine("3. Durchschnittliche Arbeitszeit aller Mitarbeiter");
+                        Console.WriteLine("4. Durchschnittliche Arbeitszeit pro Beruf");
+                        Console.Write("Auswahl: ");
+                        int statistikAuswahl = int.Parse(Console.ReadLine());
+                        if (statistikAuswahl == 1)
                         {
-                            Console.WriteLine($"{entry.Key}: {entry.Value}");
-                        }
-                    }
-
-                    else if (statistik == "3")
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Wollen Sie die durchschnittliche Überzeit von allen Mitarbeitern oder nur von Mitarbeitern eines bestimmten Berufs anzeigen?");
-                        Console.WriteLine("1. Aller Mitarbeiter");
-                        Console.WriteLine("2. Mitarbeiter eines bestimmten Berufs");
-
-                        // Eingabe des Benutzers einlesen
-                        string auswahl = Console.ReadLine();
-
-                        if (auswahl == "1")
-                        {
-                            // Durchschnittliche Überzeit von allen Mitarbeitern berechnen
-                            int summe = 0;
+                            // Durchschnittsalter aller Mitarbeiter
+                            int summeAlter = 0;
                             foreach (Mitarbeiter mitarbeiter in mitarbeiterListe)
                             {
-                                summe += mitarbeiter.Überzeit;
+                                summeAlter += mitarbeiter.Alter;
                             }
-
-                            double durchschnitt = (double)summe / mitarbeiterListe.Count;
-                            Console.Clear();
-                            Console.WriteLine($"Die durchschnittliche Überzeit aller Mitarbeiter beträgt {durchschnitt:F2} Stunden.");
-                            Console.ReadKey();
-                            Console.Clear();
+                            double durchschnittsalter = (double)summeAlter / mitarbeiterListe.Count;
+                            Console.WriteLine($"Durchschnittsalter: {durchschnittsalter:F2}");
                         }
-                        else if (auswahl == "2")
+                        else if (statistikAuswahl == 2)
                         {
-                            // Dictionary, das die Berufe mit der GesamtÜberzeit der Mitarbeiter, die den gleichen Beruf haben, verknüpft
-                            Dictionary<string, int> Überzeit = new Dictionary<string, int>();
-
+                            // Anzahl der Mitarbeiter pro Beruf
+                            var gruppierung = from mitarbeiter in mitarbeiterListe
+                                              group mitarbeiter by mitarbeiter.Arbeit into gruppe
+                                              select new { Arbeit = gruppe.Key, Anzahl = gruppe.Count() };
+                            foreach (var g in gruppierung)
+                            {
+                                Console.WriteLine($"{g.Arbeit}: {g.Anzahl}");
+                            }
+                        }
+                        else if (statistikAuswahl == 3)
+                        {
+                            // Durchschnittliche Arbeitszeit aller Mitarbeiter
+                            int summeArbeitsstunden = 0;
                             foreach (Mitarbeiter mitarbeiter in mitarbeiterListe)
                             {
-                                if (Überzeit.ContainsKey(mitarbeiter.Arbeit))
-                                {
-                                    Überzeit[mitarbeiter.Arbeit] += mitarbeiter.Überzeit;
-                                }
-                                else
-                                {
-                                    Überzeit[mitarbeiter.Arbeit] = mitarbeiter.Überzeit;
-                                }
+                                summeArbeitsstunden += mitarbeiter.Arbeitsstunden;
                             }
-
-                            Console.Clear();
-                            Console.WriteLine("Durchschnittliche Überzeit pro Beruf:");
-                            foreach (KeyValuePair<string, int> entry in Überzeit)
+                            double durchschnittsarbeitszeit = (double)summeArbeitsstunden / mitarbeiterListe.Count;
+                            Console.WriteLine($"Durchschnittliche Arbeitszeit: {durchschnittsarbeitszeit:F2} Stunden");
+                        }
+                        else if (statistikAuswahl == 4)
+                        {
+                            // Durchschnittliche Arbeitszeit pro Beruf
+                            var gruppierung = from mitarbeiter in mitarbeiterListe
+                                              group mitarbeiter by mitarbeiter.Arbeit into gruppe
+                                              select new { Arbeit = gruppe.Key, Arbeitsstunden = gruppe.Average(m => m.Arbeitsstunden) };
+                            foreach (var g in gruppierung)
                             {
-                                int anzahl = Überzeit[entry.Key];
-                                double durchschnitt = (double)entry.Value / anzahl;
-                                Console.WriteLine($"{entry.Key}: {durchschnitt:F2} Stunden");
+                                Console.WriteLine($"{g.Arbeit}: {g.Arbeitsstunden:F2} Stunden");
                             }
-                            Console.ReadKey();
-                            Console.Clear();
                         }
-                        else
+                        break;
+                    case 5:
+                        // Mitarbeiter löschen
+                        Console.WriteLine("Mitarbeiter auswählen:");
+                        for (int i = 0; i < mitarbeiterListe.Count; i++)
                         {
-                            Console.WriteLine("Ungültige Eingabe Bitte versuchen Sie es erneut.");
+                            Console.WriteLine($"{i + 1}. {mitarbeiterListe[i].Name}");
                         }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Ungültige Eingabe. Bitte versuchen Sie es erneut.");
-
-                    }
-                }
-                else if (input == "5")
-                {
-                    // Mitarbeiter auflisten
-                    Console.Clear();
-                    Console.WriteLine("Verfügbare Mitarbeiter:");
-                    for (int i = 0; i < mitarbeiterListe.Count; i++)
-                    {
-                        Console.WriteLine("{0}. {1} ({2})", i + 1, mitarbeiterListe[i].Name, mitarbeiterListe[i].Arbeit);
-                    }
-
-                    // Benutzer auffordern, den zu löschenden Mitarbeiter auszuwählen
-                    Console.WriteLine();
-                    Console.WriteLine("Bitte wählen Sie den Mitarbeiter aus, den Sie löschen möchten:");
-                    string auswahl = Console.ReadLine();
-
-                    // Versuchen, die Eingabe des Benutzers in einen gültigen Index für die Mitarbeiterliste zu konvertieren
-                    if (int.TryParse(auswahl, out int index) && index > 0 && index <= mitarbeiterListe.Count)
-                    {
-                        Console.WriteLine($"Sicher dass Sie den Mitarbeiter Löschen wollen? (j/n)");
-                        string eingabe = Console.ReadLine();
-                        if (eingabe == "j")
+                        Console.Write("Auswahl: ");
+                        int mitarbeiterLoeschenAuswahl = int.Parse(Console.ReadLine()) - 1;
+                        mitarbeiterListe.RemoveAt(mitarbeiterLoeschenAuswahl);
+                        Console.WriteLine("Mitarbeiter gelöscht.");
+                        break;
+                    case 9:
+                        // Mitarbeiter-Daten aus JSON-Datei einlesen oder speichern
+                        Console.WriteLine("1. Aus JSON-Datei einlesen");
+                        Console.WriteLine("2. In JSON-Datei speichern");
+                        Console.Write("Auswahl: ");
+                        int jsonAuswahl = int.Parse(Console.ReadLine());
+                        if (jsonAuswahl == 1)
                         {
-                            // Mitarbeiter aus der Liste entfernen
-                            mitarbeiterListe.RemoveAt(index - 1);
-                            Console.Clear();
-                            Console.WriteLine("Mitarbeiter wurde erfolgreich gelöscht.");
+                            // Aus JSON-Datei einlesen
+                            Console.Write("Dateipfad: ");
+                            string dateipfad = Console.ReadLine();
+                            mitarbeiterListe = JsonConvert.DeserializeObject<List<Mitarbeiter>>(File.ReadAllText(dateipfad));
+                            Console.WriteLine("Mitarbeiter-Daten aus JSON-Datei eingelesen.");
                         }
-                        else
+                        else if (jsonAuswahl == 2)
                         {
-                            Console.Clear();
-                            Console.WriteLine("Abgebrochen");
-                            Console.ReadKey();
-                        }
-                    }
-                    else
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Ungültige Eingabe. Bitte wählen Sie einen gültigen Mitarbeiter aus der Liste aus.");
-                    }
-
-                }
-                else if (input == "9")
-                {
-                    Console.Clear();
-                    Console.WriteLine("Wollen Sie die Mitarbeiterdaten importieren oder exportieren?");
-                    Console.WriteLine("1. Importieren");
-                    Console.WriteLine("2. Exportieren");
-
-                    // Eingabe des Benutzers einlesen
-                    string auswahl = Console.ReadLine();
-
-                    if (auswahl == "1")
-                    {
-                        Console.WriteLine("Bitte geben Sie den Pfad zur JSON-Datei an:");
-
-                        // Pfad zur JSON-Datei einlesen
-                        string pfad = Console.ReadLine();
-
-                        // JSON-Datei einlesen
-                        string json = File.ReadAllText(pfad);
-
-                        // Deserialisieren der JSON-Datei in Mitarbeiter-Objekte
-                        mitarbeiterListe = JsonConvert.DeserializeObject<List<Mitarbeiter>>(json);
-
-                        Console.WriteLine($"JSON Erfolgreich eingelesen!");
-                        Console.ReadKey();
-                        Console.Clear();
-
-                    }
-                    else if (auswahl == "2")
-                    {
-                        Console.Clear();
-                        // Serialisieren der Mitarbeiter-Objekte in JSON-Format
-                        string json = JsonConvert.SerializeObject(mitarbeiterListe);
-
-                        // Benutzer auffordern, einen Namen für die JSON-Datei anzugeben
-                        string dateiname = "";
-                        int zaehler = 1;
-                        while (true)
-                        {
-                            Console.Clear();
-                            Console.WriteLine("Bitte geben Sie einen Namen für die JSON-Datei an:");
-                            dateiname = Console.ReadLine();
-
-                            // .json an den Dateinamen anhängen, falls nicht bereits vorhanden
+                            // In JSON-Datei speichern
+                            Console.Write("Dateiname: ");
+                            string dateiname = Console.ReadLine();
                             if (!dateiname.EndsWith(".json"))
                             {
                                 dateiname += ".json";
                             }
-
-                            // Pfad für die JSON-Datei erstellen
-                            string pfad = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), dateiname);
-
-                            // Überprüfen, ob die Datei bereits existiert
-                            if (!File.Exists(pfad))
+                            if (File.Exists(dateiname))
                             {
-                                // Datei speichern
-                                File.WriteAllText(pfad, json);
-                                Console.Clear();
-                                Console.WriteLine($"JSON wurde unter {pfad} erstellt.");
-                                break;
+                                // Wenn Datei bereits vorhanden ist, fortlaufende Nummer anhängen
+                                int nummer = 1;
+                                while (File.Exists($"{dateiname.Replace(".json", "")} ({nummer}).json"))
+                                {
+                                    nummer++;
+                                }
+                                dateiname = $"{dateiname.Replace(".json", "")} ({nummer}).json";
                             }
-                            else
-                            {
-                                Console.WriteLine("Eine Datei mit dem Namen '{0}' existiert bereits auf dem Desktop.", dateiname);
-                                Console.WriteLine("Bitte wählen Sie einen anderen Namen oder löschen Sie die existierende Datei.");
-                                Console.WriteLine();
-
-                                // Zähler erhöhen, um an den Dateinamen anhängen zu können, falls erneut eine Datei mit demselben Namen existiert
-                                zaehler++;
-                            }
+                            File.WriteAllText(dateiname, JsonConvert.SerializeObject(mitarbeiterListe));
+                            Console.WriteLine($"Mitarbeiter-Daten in JSON-Datei \"{dateiname}\" gespeichert.");
                         }
-                        Console.ReadKey();
-                        Console.Clear();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Ungültige Eingabe. Bitte versuchen Sie es erneut.");
-                        Console.Clear();
-                    }
+                        break;
                 }
             }
-        }
-
-        static void UrlaubAnzeigen(List<Mitarbeiter> mitarbeiterListe)
-        {
-            Console.Clear();
-
-            foreach (Mitarbeiter mitarbeiter in mitarbeiterListe)
-            {
-                if (mitarbeiter.Urlaub > -50 || mitarbeiter.Urlaub < 50)
-                {
-                    Console.WriteLine($"{mitarbeiter.Name} hat noch {mitarbeiter.Urlaub} Tage Urlaub übrig.");
-                }
-            }
-
-            Console.ReadKey();
-            Console.Clear();
         }
     }
 }
+

@@ -1,73 +1,55 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Zeiterfassung;
+using Zeiterfassungsprogramm;
 
-namespace ZeiterfassungM320
+namespace Zeiterfassungsprogramm
 {
-    class Mitarbeiter
+    public class Mitarbeiter : IMitarbeiter
     {
+        public string Name { get; set; }
+        public int Alter { get; set; }
+        public string Arbeit { get; set; }
+        public int Urlaub { get; set; }
+        public int Arbeitsstunden { get; set; }
 
-            // Eigenschaften der Klasse Mitarbeiter
-            public string Name { get; set; }
-            public int Alter { get; set; }
-            public string Arbeit { get; set; }
-            public int Urlaub { get; set; }
-            public int Überzeit { get; set; }
-
-            // Konstruktor für die Klasse Mitarbeiter
-            public Mitarbeiter(string name, int alter, string arbeit, int urlaub, int überzeit)
-            {
-                Name = name;
-                Alter = alter;
-                Arbeit = arbeit;
-                Urlaub = urlaub;
-                Überzeit = überzeit;
-            }
-
-            // Methode zum Hinzufügen von Arbeitszeit
-            public void AddArbeitszeit(int überzeit)
-            {
-                Überzeit += überzeit;
-            }
-
-        public void SubtractUrlaub(int urlaub)
+        public Mitarbeiter(string name, int alter, string arbeit, int urlaub, int arbeitsstunden)
         {
-            if (Urlaub - urlaub >= 0)
+            Name = name;
+            Alter = alter;
+            Arbeit = arbeit;
+            Urlaub = urlaub;
+            Arbeitsstunden = arbeitsstunden;
+            return;
+        }
+
+        public int UrlaubAbziehen(int anzahl)
+        {
+            if (Urlaub - anzahl < 0)
             {
-                Urlaub -= urlaub;
+                Console.WriteLine("Der Mitarbeiter hat nicht genug Urlaubstage.");
+                return Urlaub;
             }
             else
             {
-                Console.WriteLine("Der Mitarbeiter hat nicht genügend Urlaubstage übrig. Trotzdem fortfahren? (j/n)");
-                string input = Console.ReadLine();
-                if (input == "j")
-                {
-                    Urlaub -= urlaub;
-                }
-                else
-                {
-                    Console.WriteLine("Abgebrochen");
-                    Console.ReadKey();
-                }
+                Urlaub -= anzahl;
+                return Urlaub;
             }
         }
 
-        public void AddUrlaub(int urlaub)
+        public int ArbeitsstundenBerechnen()
         {
-   
-                Console.WriteLine($"Sicher dass Sie dem Mitarbeiter {urlaub} hinzufügen möchten? (j/n)");
-                string input = Console.ReadLine();
-                if (input == "j")
-                {
-                    Urlaub += urlaub;
-                }
-            else
-            {
-                Console.WriteLine("Abgebrochen");
-                Console.ReadKey();
-            }
-            }
+            return this.Arbeitsstunden;
+        }
+
+        public void UrlaubHinzufuegen(int stunden)
+        {
+            this.Urlaub += stunden;
+            return;
+        }
+
+        void IMitarbeiter.UrlaubAbziehen(int stunden)
+        {
+            throw new NotImplementedException();
         }
     }
+}
