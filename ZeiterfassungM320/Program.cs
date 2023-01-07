@@ -22,6 +22,7 @@ namespace ZeiterfassungM320
                 Console.WriteLine("2. Mitarbeiter mit verfügbarem Urlaub auflisten");
                 Console.WriteLine("3. Neuen Mitarbeiter hinzufügen");
                 Console.WriteLine("4. Statistik anzeigen");
+                Console.WriteLine("5. Mitarbeiter Löschen");
                 Console.WriteLine("9. Mitarbeiterdaten importieren/exportieren");
 
                 // Eingabe des Benutzers einlesen
@@ -213,6 +214,47 @@ namespace ZeiterfassungM320
                         Console.WriteLine("Ungültige Eingabe. Bitte versuchen Sie es erneut.");
 
                     }
+                }
+                else if (input == "5")
+                {
+                    // Mitarbeiter auflisten
+                    Console.Clear();
+                    Console.WriteLine("Verfügbare Mitarbeiter:");
+                    for (int i = 0; i < mitarbeiterListe.Count; i++)
+                    {
+                        Console.WriteLine("{0}. {1} ({2})", i + 1, mitarbeiterListe[i].Name, mitarbeiterListe[i].Arbeit);
+                    }
+
+                    // Benutzer auffordern, den zu löschenden Mitarbeiter auszuwählen
+                    Console.WriteLine();
+                    Console.WriteLine("Bitte wählen Sie den Mitarbeiter aus, den Sie löschen möchten:");
+                    string auswahl = Console.ReadLine();
+
+                    // Versuchen, die Eingabe des Benutzers in einen gültigen Index für die Mitarbeiterliste zu konvertieren
+                    if (int.TryParse(auswahl, out int index) && index > 0 && index <= mitarbeiterListe.Count)
+                    {
+                        Console.WriteLine($"Sicher dass Sie den Mitarbeiter Löschen wollen? (j/n)");
+                        string eingabe = Console.ReadLine();
+                        if (eingabe == "j")
+                        {
+                            // Mitarbeiter aus der Liste entfernen
+                            mitarbeiterListe.RemoveAt(index - 1);
+                            Console.Clear();
+                            Console.WriteLine("Mitarbeiter wurde erfolgreich gelöscht.");
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Abgebrochen");
+                            Console.ReadKey();
+                        }
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Ungültige Eingabe. Bitte wählen Sie einen gültigen Mitarbeiter aus der Liste aus.");
+                    }
+
                 }
                 else if (input == "9")
                 {
