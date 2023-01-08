@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZeiterfassungM320 {
+namespace Zeiterfassung {
 
     // Interface für Administrative Tätigkeiten.
     public interface IAdministrativ {
@@ -15,4 +15,8 @@ namespace ZeiterfassungM320 {
         void SetLohnzuschlag(Arbeiter arbeiter,int zuschlag);
 
     }
+
+    //IMPORTANT TODO: 
+    //(maybe) anstatt administrativ Interface ein interface für ZEITERFASSUNG machen!!! MAKES MORE SENSE! Arbeiter implements dann IZeiterfassung
+    //Klasse für CEO machen
 }

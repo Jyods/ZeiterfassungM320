@@ -1,9 +1,9 @@
 ﻿using System;
 using Zeiterfassung;
-using ZeiterfassungM320;
-using Zeiterfassungsprogramm;
+using Zeiterfassung;
+using Zeiterfassungsprogramm_old;
 
-namespace Zeiterfassungsprogramm
+namespace Zeiterfassungsprogramm_old
 {
     public class Mitarbeiter : Person
     {

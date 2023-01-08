@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Zeiterfassungsprogramm;
-using ZeiterfassungM320;
+using Zeiterfassungsprogramm_old;
+using Zeiterfassung;
 
-namespace ZeiterfassungM320
+namespace Zeiterfassung
 {
     public abstract class Person
     {

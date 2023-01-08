@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZeiterfassungM320 {
+namespace Zeiterfassung {
 
     //Spezialisierte Klasse für Ausbilder. Sie haben Zeiterfassung aber auch Administrative funktionen.
     public class Ausbilder:Arbeiter, IAdministrativ {

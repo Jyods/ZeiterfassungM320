@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using ZeiterfassungM320;
-using Zeiterfassungsprogramm;
 
 namespace Zeiterfassung
 {
@@ -13,13 +11,20 @@ namespace Zeiterfassung
         static void Main(string[] args)
         {
             // Andere Listen erstellen
+            List<Funktion> funktionsListe = new List<Funktion>();
             List<Ausbilder> ausbilderListe = new List<Ausbilder>();
             List<Lernender> lernenderListe = new List<Lernender>();
 
-            Ausbilder ausbilder1 = new Ausbilder("Anna Müller", 35, "Softwareentwicklung", 20, 160);
-            Ausbilder ausbilder2 = new Ausbilder("Hans Meier", 41, "Projektmanagement", 25, 170);
-            Lernender lernender1 = new Lernender("Laura Schulz", 21, "Softwareentwicklung", 10, 10, ausbilder1);
-            Lernender lernender2 = new Lernender("Thomas Schmidt", 23, "KV", 10, 10, ausbilder2);
+            Funktion funktion1 = new Funktion("Ausbilder Softwareentwicklung",160);
+            Funktion funktion2 = new Funktion("Ausbilder Projektmanagement",170);
+            Funktion funktion3 = new Funktion("Lernende/r Softwareentwicklung",170);
+            Funktion funktion4 = new Funktion("Lernende/r Projektmanagement",170);
+            Funktion funktion5 = new Funktion("Entwickler",170);
+            Funktion funktion6 = new Funktion("Projektmanager",170);
+            Ausbilder ausbilder1 = new Ausbilder("Anna","Müller", null, funktion1); //TODO: vorgesetzter für beide ausbilder auf CEO!!
+            Ausbilder ausbilder2 = new Ausbilder("Hans","Meier", null, funktion2);
+            Lernender lernender1 = new Lernender("Laura","Schulz", ausbilder1, funktion3);
+            Lernender lernender2 = new Lernender("Thomas","Schmidt",ausbilder2,funktion4);
 
             ausbilderListe.Add(ausbilder1);
             ausbilderListe.Add(ausbilder2);
@@ -27,10 +32,10 @@ namespace Zeiterfassung
             lernenderListe.Add(lernender2);
 
             // Mitarbeiter erstellen
-            List<Mitarbeiter> mitarbeiterListe = new List<Mitarbeiter>();
-            mitarbeiterListe.Add(new Mitarbeiter("Max Mustermann", 30, "Entwickler", 20, 160));
-            mitarbeiterListe.Add(new Mitarbeiter("Erika Mustermann", 25, "Projektmanager", 25, 175));
-            mitarbeiterListe.Add(new Mitarbeiter("Jon Doe", 35, "CEO", 30, 200));
+            List<Arbeiter> mitarbeiterListe = new List<Mitarbeiter>();
+            mitarbeiterListe.Add(new Arbeiter("Max","Mustermann", null, funktion5)); //TODO: remove null reference
+            mitarbeiterListe.Add(new Arbeiter("Erika","Mustermann", null, funktion6));
+            mitarbeiterListe.Add(new Arbeiter("Jon","Doe", 35, "CEO", 30, 200)); //TODO: probs change this to use a CEO class
 
             bool beenden = false;
             while (!beenden)

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZeiterfassungM320 {
+namespace Zeiterfassung {
 
     //Klasse für User mit Zeiterfassung.
     public class Arbeiter : User {

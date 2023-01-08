@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Xml.Linq;
-using ZeiterfassungM320;
-using Zeiterfassungsprogramm;
+using Zeiterfassung;
 
-namespace Zeiterfassungsprogramm
-{
+namespace Zeiterfassung {
     public class Lernender : Arbeiter //Spezialisierte Klasse für Lernende. Sie haben spezielle Regelungen.
     {
         public Ausbilder Ausbilder { get; set; }

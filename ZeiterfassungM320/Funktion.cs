@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZeiterfassungM320 {
+namespace Zeiterfassung {
 
     //Klasse für Funktionien/Berufe
     public class Funktion {

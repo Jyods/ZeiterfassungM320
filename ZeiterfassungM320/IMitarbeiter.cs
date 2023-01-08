@@ -1,7 +1,7 @@
 ﻿using System;
-using Zeiterfassungsprogramm;
+using Zeiterfassungsprogramm_old;
 
-namespace Zeiterfassungsprogramm
+namespace Zeiterfassungsprogramm_old
 {
     public interface IMitarbeiter
     {

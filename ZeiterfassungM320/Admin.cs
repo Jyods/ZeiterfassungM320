@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZeiterfassungM320 {
+namespace Zeiterfassung {
 
     //Klasse für Administratoren. Sie haben keine Zeiterfassung aber haben Administrative funktionen.
     public class Admin:User, IAdministrativ {
