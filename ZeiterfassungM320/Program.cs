@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ZeiterfassungM320;
 using Zeiterfassungsprogramm;
 
 namespace Zeiterfassung
@@ -11,6 +12,20 @@ namespace Zeiterfassung
     {
         static void Main(string[] args)
         {
+            // Andere Listen erstellen
+            List<Ausbilder> ausbilderListe = new List<Ausbilder>();
+            List<Lernender> lernenderListe = new List<Lernender>();
+
+            Ausbilder ausbilder1 = new Ausbilder("Anna Müller", 35, "Softwareentwicklung", 20, 160);
+            Ausbilder ausbilder2 = new Ausbilder("Hans Meier", 41, "Projektmanagement", 25, 170);
+            Lernender lernender1 = new Lernender("Laura Schulz", 21, "Softwareentwicklung", 10, 10, ausbilder1);
+            Lernender lernender2 = new Lernender("Thomas Schmidt", 23, "KV", 10, 10, ausbilder2);
+
+            ausbilderListe.Add(ausbilder1);
+            ausbilderListe.Add(ausbilder2);
+            lernenderListe.Add(lernender1);
+            lernenderListe.Add(lernender2);
+
             // Mitarbeiter erstellen
             List<Mitarbeiter> mitarbeiterListe = new List<Mitarbeiter>();
             mitarbeiterListe.Add(new Mitarbeiter("Max Mustermann", 30, "Entwickler", 20, 160));
@@ -72,53 +87,110 @@ namespace Zeiterfassung
                             // Anzahl der Urlaubstage hinzufügen
                             Console.Write("Anzahl der Urlaubstage: ");
                             int urlaubstage = int.Parse(Console.ReadLine());
-                            mitarbeiterListe[mitarbeiterAuswahl].UrlaubHinzufuegen(urlaubstage);
+                            mitarbeiterListe[mitarbeiterAuswahl].UrlaubHinzufügen(urlaubstage);
                             //Console.WriteLine($"{ur mitarbeiterListe[mitarbeiterAuswahl].UrlaubAbziehen(urlaubstage);
                             Console.WriteLine($"{urlaubstage} Urlaubstage wurden von {mitarbeiterListe[mitarbeiterAuswahl].Name} abgezogen.");
                         }
-                        else if (urlaubAuswahl == 2)
-                        {
-                            // Mitarbeiter auswählen
-                            Console.WriteLine("Mitarbeiter auswählen:");
-                            for (int i = 0; i < mitarbeiterListe.Count; i++)
-                            {
-                                Console.WriteLine($"{i + 1}. {mitarbeiterListe[i].Name} ({mitarbeiterListe[i].Urlaub} Urlaubstage verfügbar)");
-                            }
-                            Console.Write("Auswahl: ");
-                            int mitarbeiterAuswahl = int.Parse(Console.ReadLine()) - 1;
-
-                            // Anzahl der Urlaubstage hinzufügen
-                            Console.Write("Anzahl der Urlaubstage: ");
-                            int urlaubstage = int.Parse(Console.ReadLine());
-                            mitarbeiterListe[mitarbeiterAuswahl].UrlaubHinzufuegen(urlaubstage);
-                            Console.WriteLine($"{urlaubstage} Urlaubstage wurden zu {mitarbeiterListe[mitarbeiterAuswahl].Name} hinzugefügt.");
-                        }
                         break;
+
                     case 2:
-                        // Mitarbeiter mit verfügbarem Resturlaub anzeigen
+                        Console.WriteLine("Verfügbarer Resturlaub:");
+                        Console.WriteLine("------------------------");
+
+                        // Mitarbeiter anzeigen
                         foreach (Mitarbeiter mitarbeiter in mitarbeiterListe)
                         {
-                            if (mitarbeiter.Urlaub > 0)
-                            {
-                                Console.WriteLine($"{mitarbeiter.Name} ({mitarbeiter.Urlaub} Urlaubstage verfügbar)");
-                            }
+                            Console.WriteLine($"{mitarbeiter.Name}: {mitarbeiter.Resturlaub} Tage Resturlaub ({mitarbeiter.GetType().Name})");
+                        }
+                        foreach (Ausbilder ausbilder in ausbilderListe)
+                        {
+                            Console.WriteLine($"{ausbilder.Name}: {ausbilder.Resturlaub} Tage Resturlaub ({ausbilder.GetType().Name})");
+                        }
+                        foreach (Lernender lernender in lernenderListe)
+                        {
+                            Console.WriteLine($"{lernender.Name}: {lernender.Resturlaub} Tage Resturlaub ({lernender.GetType().Name})");
+                        }
+
+
+                        break;
+
+                    // Mitarbeiter Hinzufügen
+                    case 3:
+                        Console.WriteLine("Bitte wählen Sie den Typ des Mitarbeiters aus:");
+                        Console.WriteLine("1. Mitarbeiter");
+                        Console.WriteLine("2. Lernender");
+                        Console.WriteLine("3. Vorgesetzer");
+                        int mitarbeiterTyp = int.Parse(Console.ReadLine());
+
+                        switch (mitarbeiterTyp)
+                        {
+                            case 1:
+                                // Mitarbeiter hinzufügen
+                                Console.Write("Name: ");
+                                string name = Console.ReadLine();
+                                Console.Write("Alter: ");
+                                int alter = int.Parse(Console.ReadLine());
+                                Console.Write("Arbeit: ");
+                                string arbeit = Console.ReadLine();
+                                Console.Write("Urlaub: ");
+                                int urlaub = int.Parse(Console.ReadLine());
+                                Console.Write("Arbeitsstunden: ");
+                                int arbeitsstunden = int.Parse(Console.ReadLine());
+                                Mitarbeiter mitarbeiter = new Mitarbeiter(name, alter, arbeit, urlaub, arbeitsstunden);
+                                mitarbeiterListe.Add(mitarbeiter);
+                                Console.WriteLine("Mitarbeiter hinzugefügt.");
+                                break;
+                            case 2:
+                                Console.Write("Name des Lernenden: ");
+                                string lernenderName = Console.ReadLine();
+                                Console.Write("Alter des Lernenden: ");
+                                int lernenderAlter = int.Parse(Console.ReadLine());
+                                Console.Write("Arbeit des Lernenden: ");
+                                string lernenderArbeit = Console.ReadLine();
+                                Console.Write("Urlaub des Lernenden: ");
+                                int lernenderUrlaub = int.Parse(Console.ReadLine());
+                                Console.Write("Arbeitsstunden des Lernenden: ");
+                                int lernenderArbeitsstunden = int.Parse(Console.ReadLine());
+
+                                Console.WriteLine("Ausbilder auswählen:");
+                                for (int i = 0; i < ausbilderListe.Count; i++)
+                                {
+                                    Console.WriteLine($"{i + 1}. {ausbilderListe[i].Name}");
+                                }
+                                Console.Write("Ausbilder-Auswahl: ");
+                                int ausbilderAuswahl = int.Parse(Console.ReadLine()) - 1;
+                                Ausbilder ausbilder = ausbilderListe[ausbilderAuswahl];
+
+                                Lernender lernender = new Lernender(lernenderName, lernenderAlter, lernenderArbeit, lernenderUrlaub, lernenderArbeitsstunden, ausbilder);
+                                lernenderListe.Add(lernender);
+                                ausbilder.LernenderListe.Add(lernender);
+                                break;
+
+                            case 3:
+                                // Code zum Hinzufügen eines Vorgesetzten
+                                break;
+                            case 4:
+                                // Ausbilder hinzufügen
+                                Console.Write("Name: ");
+                                string Ausbildername = Console.ReadLine();
+                                Console.Write("Alter: ");
+                                int Ausbilderalter = int.Parse(Console.ReadLine());
+                                Console.Write("Arbeit: ");
+                                string Ausbilderarbeit = Console.ReadLine();
+                                Console.Write("Urlaub: ");
+                                int Ausbilderurlaub = int.Parse(Console.ReadLine());
+                                Console.Write("Arbeitsstunden: ");
+                                int Ausbilderarbeitsstunden = int.Parse(Console.ReadLine());
+                                Ausbilder newausbilder = new Ausbilder(Ausbildername, Ausbilderalter, Ausbilderarbeit, Ausbilderurlaub, Ausbilderarbeitsstunden);
+                                ausbilderListe.Add(newausbilder);
+                                break;
+                            default:
+                                Console.WriteLine("Ungültige Auswahl.");
+                                break;
                         }
                         break;
-                    case 3:
-                        // Mitarbeiter hinzufügen
-                        Console.Write("Name: ");
-                        string name = Console.ReadLine();
-                        Console.Write("Alter: ");
-                        int alter = int.Parse(Console.ReadLine());
-                        Console.Write("Arbeit: ");
-                        string arbeit = Console.ReadLine();
-                        Console.Write("Urlaub: ");
-                        int urlaub = int.Parse(Console.ReadLine());
-                        Console.Write("Arbeitsstunden: ");
-                        int arbeitsstunden = int.Parse(Console.ReadLine());
-                        mitarbeiterListe.Add(new Mitarbeiter(name, alter, arbeit, urlaub, arbeitsstunden));
-                        Console.WriteLine("Mitarbeiter hinzugefügt.");
-                        break;
+
+                        
                     case 4:
                         // Statistik anzeigen
                         Console.WriteLine("1. Durchschnittsalter aller Mitarbeiter");

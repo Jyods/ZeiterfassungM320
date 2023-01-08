@@ -1,55 +1,53 @@
 ﻿using System;
 using Zeiterfassung;
+using ZeiterfassungM320;
 using Zeiterfassungsprogramm;
 
 namespace Zeiterfassungsprogramm
 {
-    public class Mitarbeiter : IMitarbeiter
+    public class Mitarbeiter : Person
     {
-        public string Name { get; set; }
-        public int Alter { get; set; }
+        public int Resturlaub { get; set; }
+        public int abgezogenerUrlaub { get; set; }
         public string Arbeit { get; set; }
         public int Urlaub { get; set; }
         public int Arbeitsstunden { get; set; }
 
-        public Mitarbeiter(string name, int alter, string arbeit, int urlaub, int arbeitsstunden)
+        public Mitarbeiter(string name, int alter, string arbeit, int urlaub, int arbeitsstunden) : base(name, alter)
         {
-            Name = name;
-            Alter = alter;
-            Arbeit = arbeit;
-            Urlaub = urlaub;
-            Arbeitsstunden = arbeitsstunden;
-            return;
+            this.Arbeit = arbeit;
+            this.Urlaub = urlaub;
+            this.Arbeitsstunden = arbeitsstunden;
         }
 
-        public int UrlaubAbziehen(int anzahl)
+        public virtual int ArbeitsstundenModifizieren(int stunden)
         {
-            if (Urlaub - anzahl < 0)
-            {
-                Console.WriteLine("Der Mitarbeiter hat nicht genug Urlaubstage.");
-                return Urlaub;
-            }
-            else
-            {
-                Urlaub -= anzahl;
-                return Urlaub;
-            }
-        }
-
-        public int ArbeitsstundenBerechnen()
-        {
+            this.Arbeitsstunden = stunden;
             return this.Arbeitsstunden;
         }
 
-        public void UrlaubHinzufuegen(int stunden)
+        public int UrlaubAbziehen(int anzahlTage)
         {
-            this.Urlaub += stunden;
-            return;
+            if (this.Resturlaub - anzahlTage < 0)
+            {
+                // Mitarbeiter kann nicht in den Minus-Bereich gehen
+                Console.WriteLine("Fehler: Mitarbeiter kann nicht in den Minus-Bereich gehen.");
+                return this.Resturlaub;
+            }
+            else
+            {
+                // Urlaubstage abziehen
+                this.abgezogenerUrlaub += anzahlTage;
+                return this.Resturlaub;
+            }
         }
 
-        void IMitarbeiter.UrlaubAbziehen(int stunden)
+        public void UrlaubHinzufügen(int tage)
         {
-            throw new NotImplementedException();
+            this.Urlaub += tage;
         }
+
+
     }
+
 }
