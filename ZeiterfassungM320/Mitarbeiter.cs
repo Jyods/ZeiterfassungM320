@@ -1,6 +1,5 @@
 ﻿using System;
 using Zeiterfassung;
-using ZeiterfassungM320;
 using Zeiterfassungsprogramm;
 
 namespace Zeiterfassungsprogramm
@@ -28,17 +27,21 @@ namespace Zeiterfassungsprogramm
 
         public int UrlaubAbziehen(int anzahlTage)
         {
-            if (this.Resturlaub - anzahlTage < 0)
+            if ((this.Urlaub - anzahlTage) < 0)
             {
+                Console.Clear();
                 // Mitarbeiter kann nicht in den Minus-Bereich gehen
-                Console.WriteLine("Fehler: Mitarbeiter kann nicht in den Minus-Bereich gehen.");
-                return this.Resturlaub;
+                Console.WriteLine("Fehler: Mitarbeiter kann nicht in den Minus-Bereich gehen." + (this.Urlaub - anzahlTage));
+                return this.Urlaub;
             }
             else
             {
+                Console.Clear();
                 // Urlaubstage abziehen
-                this.abgezogenerUrlaub += anzahlTage;
-                return this.Resturlaub;
+                this.Urlaub -= anzahlTage;
+                Console.WriteLine($"{anzahlTage} Urlaubstage wurden von {Name} abgezogen.");
+                Console.WriteLine($"Resturlaub: " + this.Urlaub);
+                return this.Urlaub;
             }
         }
 

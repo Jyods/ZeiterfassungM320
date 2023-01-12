@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Xml.Linq;
-using ZeiterfassungM320;
 using Zeiterfassungsprogramm;
 
 namespace Zeiterfassungsprogramm
@@ -19,6 +18,7 @@ namespace Zeiterfassungsprogramm
             if (stunden > 10)
             {
                 Console.WriteLine("Lernende dürfen maximal 10 Arbeitsstunden haben. Bitte geben Sie eine gültige Anzahl ein.");
+                Console.ReadKey();
                 return this.Arbeitsstunden;
             }
             else
@@ -30,6 +30,12 @@ namespace Zeiterfassungsprogramm
         public void UrlaubHinzufügen(int tage)
         {
             this.Urlaub += tage;
+        }
+
+        public override void Anzeige()
+        {
+            base.Anzeige();
+            Console.WriteLine($"Ausbilder: {Ausbilder.Name}");
         }
     }
 

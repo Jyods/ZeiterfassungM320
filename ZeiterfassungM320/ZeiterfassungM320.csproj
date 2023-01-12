@@ -50,7 +50,9 @@
     <Compile Include="Arbeiter.cs" />
     <Compile Include="Ausbilder.cs" />
     <Compile Include="Funktion.cs" />
+    <Compile Include="IAnzeige.cs" />
     <Compile Include="IMitarbeiter.cs" />
+    <Compile Include="JSONHandling.cs" />
     <Compile Include="Lernender.cs" />
     <Compile Include="Mitarbeiter.cs" />
     <Compile Include="Person.cs" />

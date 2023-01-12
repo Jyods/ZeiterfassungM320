@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Zeiterfassungsprogramm;
 using ZeiterfassungM320;
+using Zeiterfassungsprogramm;
 
-namespace ZeiterfassungM320
+namespace Zeiterfassungsprogramm
 {
-    public abstract class Person
+    public abstract class Person : IAnzeige
     {
         public string Name { get; set; }
         public int Alter { get; set; }
@@ -20,6 +20,14 @@ namespace ZeiterfassungM320
         {
             this.Name = name;
             this.Alter = alter;
+        }
+        public virtual void Anzeige()
+        {
+            Console.WriteLine($"Name: {Name}");
+            Console.WriteLine($"Alter: {Alter}");
+            Console.WriteLine($"Arbeit: {Arbeit}");
+            Console.WriteLine($"Resturlaub: {Urlaub}");
+            Console.WriteLine($"Überzeit: {Arbeitsstunden}");
         }
     }
 }

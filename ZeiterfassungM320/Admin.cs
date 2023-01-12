@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZeiterfassungM320 {
+namespace Zeiterfassungsprogramm
+{
     public class Admin : User {
 
         //admin is a user who does not work!!! they can do administrative stuff or sumn

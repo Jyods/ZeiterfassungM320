@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Zeiterfassungsprogramm;
 
-namespace ZeiterfassungM320 {
+namespace Zeiterfassungsprogramm
+{
 
     public class Ausbilder : Mitarbeiter
     {
