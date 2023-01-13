@@ -9,17 +9,27 @@ namespace Zeiterfassungsprogramm
 {
     public class Arbeiter : User {
 
-        private User vorgesetzter; //potentially use interface for this ("verantwortlich"?)
-        private Funktion funktion;
-        private int lohnZuschlag;
+        public virtual Arbeiter Vorgesetzter { get; set; }
+        public virtual Funktion Funktion { get; set; }
+        public virtual int LohnZuschlag { get; set; }
+        public virtual int PeroenlicherLohn { get { return Funktion.Lohn + LohnZuschlag; } }
 
-        private int sollZeit;
-        private int istZeit;
+        public virtual int Ferienguthaben { get { return Ferienguthaben; } set { Ferienguthaben = Math.Max(value,35); } }
+        public virtual int Ferienbezug { get; set; }
 
-        private int ferienguthaben;
-        private int ferienbezug;
+        // Konstruktor
+        public Arbeiter(string vorname,string nachname,Arbeiter vorgesetzer,Funktion funktion) : base(nachname+vorname,vorname,nachname) {
+            Vorgesetzter = vorgesetzer;
+            Funktion = funktion;
+            Ferienguthaben = 35;
+        }
+        public Arbeiter(string vorname,string nachname,Arbeiter vorgesetzer,Funktion funktion,int ferienguthaben) : base(nachname+vorname,vorname,nachname) {
+            Vorgesetzter = vorgesetzer;
+            Funktion = funktion;
+            Ferienguthaben = ferienguthaben;
+        }
 
-        //TODO: add functions (request, ..whatever)🤖🤖🤖
+        //TODO: add functions for anfrage, ... 🤖🤖🤖
 
     }
 }
