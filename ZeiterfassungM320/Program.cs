@@ -75,6 +75,7 @@ namespace Zeiterfassung
                         Console.Clear();
                         if (urlaubAuswahl == 1)
                         {
+                            Console.Clear();
                             // Mitarbeiter auswählen
                             Console.WriteLine("Mitarbeiter auswählen:");
                             for (int i = 0; i < mitarbeiterListe.Count; i++)
@@ -86,6 +87,7 @@ namespace Zeiterfassung
 
                             if (mitarbeiterAuswahl > 0 && mitarbeiterAuswahl < mitarbeiterListe.Count)
                             {
+                                Console.Clear();
                                 // Anzahl der Urlaubstage abziehen
                                 Console.Write("Anzahl der Urlaubstage: ");
                                 int urlaubstage = int.Parse(Console.ReadLine());
@@ -159,7 +161,7 @@ namespace Zeiterfassung
                         Console.WriteLine("3. Ausbilder");
                         Console.WriteLine("9. Zurück");
                         int mitarbeiterTyp = int.Parse(Console.ReadLine());
-
+                        Console.Clear();
                         switch (mitarbeiterTyp)
                         {
                             case 1:
@@ -186,6 +188,7 @@ namespace Zeiterfassung
                                 mitarbeiter.Anzeige(); // Anwendung der Methode "Anzeige()" des Interfaces "IAnzeige" auf das Mitarbeiter-Objekt
                                 mitarbeiterListe.Add(mitarbeiter);
                                 Console.WriteLine("Mitarbeiter hinzugefügt.");
+                                Console.Clear();
                                 break;
                             case 2:
                                 Console.Write("Vorname des Lernenden: ");
@@ -219,6 +222,7 @@ namespace Zeiterfassung
                                 Lernender lernender = new Lernender(lernenderVorName, lernenderNachName, lernenderAlter, ausbilder, lernenderArbeit);
                                 lernender.Anzeige(); // Anwendung der Methode "Anzeige()" des Interfaces "IAnzeige" auf das Lernender-Objekt
                                 lernenderListe.Add(lernender);
+                                Console.Clear();
                                 break;
                             case 3:
                                 // Ausbilder hinzufügen
@@ -242,11 +246,14 @@ namespace Zeiterfassung
                                 int Ausbilderarbeitsstunden = int.Parse(Console.ReadLine());
                                 Ausbilder newausbilder = new Ausbilder(Ausbildervorname,Ausbildernachname,Ausbilderalter,null,Ausbilderarbeit);//TODO: CEO!!!!!!!!!!!!!!!!!!!!
                                 ausbilderListe.Add(newausbilder);
+                                Console.Clear();
                                 break;
                             default:
+                                Console.Clear();
                                 Console.WriteLine("Ungültige Auswahl.");
                                 break;
                             case 9:
+                                Console.Clear();
                                 break;
                         }
                         break;
@@ -261,6 +268,7 @@ namespace Zeiterfassung
                         Console.WriteLine("4. Durchschnittliche Arbeitszeit pro Beruf");
                         Console.Write("Auswahl: ");
                         int statistikAuswahl = int.Parse(Console.ReadLine());
+                        Console.Clear();
                         if (statistikAuswahl == 1)
                         {
                             // Durchschnittsalter aller Mitarbeiter
@@ -305,6 +313,7 @@ namespace Zeiterfassung
                                 Console.WriteLine($"{g.Arbeit}: {g.Arbeitsstunden:F2} Stunden");
                             }
                         }
+                        Console.Clear();
                         break;
                     case 5:
                         Console.Clear();
@@ -318,6 +327,7 @@ namespace Zeiterfassung
                         int mitarbeiterLoeschenAuswahl = int.Parse(Console.ReadLine()) - 1;
                         mitarbeiterListe.RemoveAt(mitarbeiterLoeschenAuswahl);
                         Console.WriteLine("Mitarbeiter gelöscht.");
+                        Console.Clear();
                         break;
                     case 6:
                         Console.Clear();
@@ -414,6 +424,7 @@ namespace Zeiterfassung
                             Console.WriteLine($"Mitarbeiter-Daten in JSON-Datei \"{dateiname}\" gespeichert.");
 
                             Console.ReadKey();
+                            Console.Clear();
                         }
                         break;
                     case 0:
