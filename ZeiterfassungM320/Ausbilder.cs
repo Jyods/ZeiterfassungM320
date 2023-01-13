@@ -25,10 +25,10 @@ namespace Zeiterfassungsprogramm
         }
 
         //Konstruktoren
-        public Ausbilder(string vorname,string nachname,Arbeiter vorgesetzter,Funktion funktion):base(vorname,nachname,vorgesetzter,funktion) {
+        public Ausbilder(string vorname,string nachname,int alter,Arbeiter vorgesetzter,Funktion funktion):base(vorname,nachname,alter,vorgesetzter,funktion) {
             PermissionLevel = 5;
         }
-        public Ausbilder(string vorname,string nachname,Arbeiter vorgesetzter,Funktion funktion,int permissionLevel) : base(vorname,nachname,vorgesetzter,funktion) {
+        public Ausbilder(string vorname,string nachname, int alter, Arbeiter vorgesetzter,Funktion funktion,int permissionLevel) : base(vorname,nachname,alter,vorgesetzter,funktion) {
             PermissionLevel = Math.Max(permissionLevel,5);
         }
 

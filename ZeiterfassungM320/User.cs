@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zeiterfassung {
+namespace Zeiterfassungsprogramm {
 
     //Basisklasse für alle Benutzer
     public abstract class User {
