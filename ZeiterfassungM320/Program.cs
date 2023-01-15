@@ -96,6 +96,16 @@ namespace Zeiterfassungsprogramm {
                     {
                         Console.WriteLine($"{mitarbeiter.GetGanzerName()}: {mitarbeiter.GetFerienguthaben()} Tage Resturlaub ({mitarbeiter.GetType().Name})");
                     }
+                    // Ausbilder anzeigen
+                    foreach (Ausbilder ausbilder in ausbilderListe)
+                    {
+                        Console.WriteLine($"{ausbilder.GetGanzerName()}: {ausbilder.GetFerienguthaben()} Tage Resturlaub ({ausbilder.GetType().Name})");
+                    }
+                    // Mitarbeiter anzeigen
+                    foreach (Lernender lernender in lernendeListe)
+                    {
+                        Console.WriteLine($"{lernender.GetGanzerName()}: {lernender.GetFerienguthaben()} Tage Resturlaub ({lernender.GetType().Name})");
+                    }
                     Console.WriteLine("");
                     Console.WriteLine($"Drücke Enter um zu verlassen.");
                     Console.ReadKey();
@@ -139,8 +149,11 @@ namespace Zeiterfassungsprogramm {
                             int arbeitsstunden = int.Parse(Console.ReadLine());
                             Arbeiter mitarbeiter = new Arbeiter(vorname, nachname, alter, ceo, funktion);
                             mitarbeiter.Anzeige(); // Anwendung der Methode "Anzeige()" des Interfaces "IAnzeige" auf das Mitarbeiter-Objekt
-                            arbeiterListe.Add(mitarbeiter);
+                                Console.Clear();
+                                arbeiterListe.Add(mitarbeiter);
                             Console.WriteLine("Mitarbeiter hinzugefügt.");
+                                mitarbeiter.Anzeige();
+                            Console.ReadKey();
                             Console.Clear();
                             break;
                         case 2:
@@ -173,9 +186,12 @@ namespace Zeiterfassungsprogramm {
                             Ausbilder ausbilder = ausbilderListe[ausbilderAuswahl];
 
                             Lernender lernender = new Lernender(lernenderVorName, lernenderNachName, lernenderAlter, ausbilder, lernenderArbeit);
-                            lernender.Anzeige(); // Anwendung der Methode "Anzeige()" des Interfaces "IAnzeige" auf das Lernender-Objekt
-                            lernendeListe.Add(lernender);
-                            Console.Clear();
+                                Console.Clear();
+                                Console.WriteLine("Lernender hinzugefügt.");
+                                lernender.Anzeige(); // Anwendung der Methode "Anzeige()" des Interfaces "IAnzeige" auf das Lernender-Objekt
+                                lernendeListe.Add(lernender);
+                                Console.ReadKey();
+                                Console.Clear();
                             break;
                         case 3:
                             Console.WriteLine("Ausbilder Hinzufügen");
@@ -200,8 +216,12 @@ namespace Zeiterfassungsprogramm {
                             Console.Write("Arbeitsstunden: ");
                             int Ausbilderarbeitsstunden = int.Parse(Console.ReadLine());
                             Ausbilder newausbilder = new Ausbilder(Ausbildervorname,Ausbildernachname,Ausbilderalter,ceo,Ausbilderarbeit);
-                            ausbilderListe.Add(newausbilder);
-                            Console.Clear();
+                                Console.Clear();
+                                Console.WriteLine("Ausbilder hinzugefügt.");
+                                newausbilder.Anzeige();
+                                ausbilderListe.Add(newausbilder);
+                                Console.ReadKey();
+                                Console.Clear();
                             break;
                         default:
                             Console.WriteLine("Ungültige Auswahl. Drücke Enter um zu verlassen.");
@@ -319,6 +339,7 @@ namespace Zeiterfassungsprogramm {
                     }
                     Console.Write("Auswahl: ");
                     int lernenderAuswahl = int.Parse(Console.ReadLine());
+                    Console.Clear();
                     if (lernenderAuswahl >= 1 && lernenderAuswahl <= lernendeListe.Count)
                     {
                         Lernender ausgewählterLernender = lernendeListe[lernenderAuswahl - 1];
