@@ -16,7 +16,8 @@ namespace Zeiterfassungsprogramm
         public int Alter { get; set; }
 
         private int _ferienguthaben;
-        public virtual int Ferienguthaben { get { return _ferienguthaben; } set { _ferienguthaben = Math.Max(value,35); } }
+        //public virtual int Ferienguthaben { get { return _ferienguthaben; } set { _ferienguthaben = Math.Max(value,35); } }
+        public virtual int Ferienguthaben { get; set; }
         public virtual int Ferienbezug { get; set; }
         public int Arbeitsstunden { get; set; }
 
