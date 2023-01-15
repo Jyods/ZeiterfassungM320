@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Zeiterfassungsprogramm {
 
-    //Klasse für den CEO. Administrative funktionen, ohne zeiterfassung
-    public class CEO:User, IAdministrativ {
+    //Klasse für den CEO. Administrative funktionen
+    public class CEO:Arbeiter, IAdministrativ {
 
         public int PermissionLevel { get; set; }
 
         //Kunstruktoren
-        public CEO(string vorname,string nachname) : base(nachname+vorname,vorname,nachname) {
+        public CEO(string vorname,string nachname,int alter) : base(vorname,nachname,alter,null,null) {
             PermissionLevel = 100;
         }
 

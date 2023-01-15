@@ -67,20 +67,20 @@ namespace Zeiterfassungsprogramm
 
         #region Getter & Setter
         //Vorgesetzer
-        public Arbeiter GetVorgesetzer() { return _vorgesetzter; }
-        public void SetVorgesetzer(Arbeiter vorgesetzer) { _vorgesetzter = vorgesetzer; }
+        public virtual Arbeiter GetVorgesetzer() { return _vorgesetzter; }
+        public virtual void SetVorgesetzer(Arbeiter vorgesetzer) { _vorgesetzter = vorgesetzer; }
 
         //Funktion;
-        public Funktion GetFunktion() { return _funktion; }
-        public void SetFunktion(Funktion funktion) { _funktion = funktion; }
+        public virtual Funktion GetFunktion() { return _funktion; }
+        public virtual void SetFunktion(Funktion funktion) { _funktion = funktion; }
 
         //Lohnzuschlag;
-        public int GetLohnZuschlag() { return _lohnZuschlag; }
-        public void SetLohnZuschlag(int zuschlag) { _lohnZuschlag = zuschlag; }
+        public virtual int GetLohnZuschlag() { return _lohnZuschlag; }
+        public virtual void SetLohnZuschlag(int zuschlag) { _lohnZuschlag = zuschlag; }
 
         //Alter;
-        public int GetAlter() { return _alter; }
-        public void SetAlter(int alter) { _alter = alter; }
+        public virtual int GetAlter() { return _alter; }
+        public virtual void SetAlter(int alter) { _alter = alter; }
 
         //Ferienguthaben;
         public virtual int GetFerienguthaben() { return _ferienguthaben; }
@@ -94,15 +94,15 @@ namespace Zeiterfassungsprogramm
         }
 
         //Ferienbezug;
-        public int GetFerienbezug() { return _ferienbezug; }
-        public void SetFerienbezug(int bezug) { _ferienbezug = bezug; }
+        public virtual int GetFerienbezug() { return _ferienbezug; }
+        public virtual void SetFerienbezug(int bezug) { _ferienbezug = bezug; }
 
         //Arbeitsstunden;
         public virtual int GetArbeitsstunden() { return _arbeitsstunden; }
         public virtual void SetArbeitsstunden(int stunden) { _arbeitsstunden = stunden; }
 
         //Persönlicher Lohn
-        public int GetPeroenlichenLohn() { return GetFunktion().Lohn + GetLohnZuschlag(); }
+        public virtual int GetPeroenlichenLohn() { return GetFunktion().Lohn + GetLohnZuschlag(); }
         #endregion
     }
 }
