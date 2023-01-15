@@ -424,7 +424,7 @@ namespace Zeiterfassungsprogramm {
             Funktion funktion_le_2 = new Funktion("Lernende/r Projektmanagement",170);
 
             // Mitarbeiter erstellen
-            CEO ceo = new CEO("Samantha","Rasper",54);
+            ceo = new CEO("Samantha","Rasper",54);
             Ausbilder ausbilder1 = new Ausbilder("Anna","Müller",34,ceo,funktion_au_1);
             Ausbilder ausbilder2 = new Ausbilder("Hans","Meier",69,ceo,funktion_au_2);
             Lernender lernender1 = new Lernender("Laura","Schulz",16,ausbilder1,funktion_le_1);
