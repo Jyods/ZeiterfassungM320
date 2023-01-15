@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
-using ZeiterfassungM320;
 using Zeiterfassungsprogramm;
 
 namespace Zeiterfassung
@@ -14,24 +13,37 @@ namespace Zeiterfassung
         static void Main(string[] args)
         {
             // Andere Listen erstellen
+            List<Funktion> funktionsListe = new List<Funktion>();
             List<Ausbilder> ausbilderListe = new List<Ausbilder>();
             List<Lernender> lernenderListe = new List<Lernender>();
 
-            Ausbilder ausbilder1 = new Ausbilder("Anna Müller", 35, "Softwareentwicklung", 20, 160);
-            Ausbilder ausbilder2 = new Ausbilder("Hans Meier", 41, "Projektmanagement", 25, 170);
-            Lernender lernender1 = new Lernender("Laura Schulz", 21, "Softwareentwicklung", 10, 10, ausbilder1);
-            Lernender lernender2 = new Lernender("Thomas Schmidt", 23, "KV", 10, 10, ausbilder2);
+            Funktion funktion1 = new Funktion("Ausbilder Softwareentwicklung",160);
+            Funktion funktion2 = new Funktion("Ausbilder Projektmanagement",170);
+            Funktion funktion3 = new Funktion("Lernende/r Softwareentwicklung",170);
+            Funktion funktion4 = new Funktion("Lernende/r Projektmanagement",170);
+            Funktion funktion5 = new Funktion("Entwickler",170);
+            Funktion funktion6 = new Funktion("Projektmanager",170);
+            Ausbilder ausbilder1 = new Ausbilder("Anna","Müller", 34, null, funktion1); //TODO: vorgesetzter für beide ausbilder auf CEO!!
+            Ausbilder ausbilder2 = new Ausbilder("Hans","Meier",69, null, funktion2);
+            Lernender lernender1 = new Lernender("Laura","Schulz", 16, ausbilder1, funktion3);
+            Lernender lernender2 = new Lernender("Thomas","Schmidt", 17, ausbilder2,funktion4);
 
+            funktionsListe.Add(funktion1);
+            funktionsListe.Add(funktion2);
+            funktionsListe.Add(funktion3);
+            funktionsListe.Add(funktion4);
+            funktionsListe.Add(funktion5);
+            funktionsListe.Add(funktion6);
             ausbilderListe.Add(ausbilder1);
             ausbilderListe.Add(ausbilder2);
             lernenderListe.Add(lernender1);
             lernenderListe.Add(lernender2);
 
             // Mitarbeiter erstellen
-            List<Mitarbeiter> mitarbeiterListe = new List<Mitarbeiter>();
-            mitarbeiterListe.Add(new Mitarbeiter("Max Mustermann", 30, "Entwickler", 20, 160));
-            mitarbeiterListe.Add(new Mitarbeiter("Erika Mustermann", 25, "Projektmanager", 25, 175));
-            mitarbeiterListe.Add(new Mitarbeiter("Jon Doe", 35, "CEO", 30, 200));
+            List<Arbeiter> mitarbeiterListe = new List<Arbeiter>();
+            mitarbeiterListe.Add(new Arbeiter("Max","Mustermann", 50, null, funktion5)); //TODO: remove null reference
+            mitarbeiterListe.Add(new Arbeiter("Erika","Mustermann", 20, null, funktion6));
+            //mitarbeiterListe.Add(new Arbeiter("Jon","Doe", 35, "CEO", 30, 200)); //TODO: probs change this to use a CEO class
 
             bool beenden = false;
             while (!beenden)
@@ -63,17 +75,19 @@ namespace Zeiterfassung
                         Console.Clear();
                         if (urlaubAuswahl == 1)
                         {
+                            Console.Clear();
                             // Mitarbeiter auswählen
                             Console.WriteLine("Mitarbeiter auswählen:");
                             for (int i = 0; i < mitarbeiterListe.Count; i++)
                             {
-                                Console.WriteLine($"{i + 1}. {mitarbeiterListe[i].Name} ({mitarbeiterListe[i].Urlaub} Urlaubstage verfügbar)");
+                                Console.WriteLine($"{i + 1}. {mitarbeiterListe[i].GanzerName} ({mitarbeiterListe[i].Ferienguthaben} Urlaubstage verfügbar)");
                             }
                             Console.Write("Auswahl: ");
                             int mitarbeiterAuswahl = int.Parse(Console.ReadLine()) - 1;
 
                             if (mitarbeiterAuswahl > 0 && mitarbeiterAuswahl < mitarbeiterListe.Count)
                             {
+                                Console.Clear();
                                 // Anzahl der Urlaubstage abziehen
                                 Console.Write("Anzahl der Urlaubstage: ");
                                 int urlaubstage = int.Parse(Console.ReadLine());
@@ -88,7 +102,7 @@ namespace Zeiterfassung
                             Console.WriteLine("Mitarbeiter auswählen:");
                             for (int i = 0; i < mitarbeiterListe.Count; i++)
                             {
-                                Console.WriteLine($"{i + 1}. {mitarbeiterListe[i].Name} ({mitarbeiterListe[i].Urlaub} Urlaubstage verfügbar)");
+                                Console.WriteLine($"{i + 1}. {mitarbeiterListe[i].GanzerName} ({mitarbeiterListe[i].Ferienguthaben} Urlaubstage verfügbar)");
                             }
                             Console.Write("Auswahl: ");
                             int mitarbeiterAuswahl = int.Parse(Console.ReadLine()) - 1;
@@ -100,7 +114,7 @@ namespace Zeiterfassung
                                 int urlaubstage = int.Parse(Console.ReadLine());
                                 mitarbeiterListe[mitarbeiterAuswahl].UrlaubHinzufügen(urlaubstage);
                                 //Console.WriteLine($"{ur mitarbeiterListe[mitarbeiterAuswahl].UrlaubAbziehen(urlaubstage);
-                                Console.WriteLine($"{urlaubstage} Urlaubstage wurden von {mitarbeiterListe[mitarbeiterAuswahl].Name} abgezogen.");
+                                Console.WriteLine($"{urlaubstage} Urlaubstage wurden von {mitarbeiterListe[mitarbeiterAuswahl].GanzerName} abgezogen.");
                             }
                             else
                                 Console.WriteLine("Ungültige Eingabe: Abgebrochen");
@@ -121,7 +135,7 @@ namespace Zeiterfassung
                         Console.WriteLine("------------------------");
 
                         // Mitarbeiter anzeigen
-                        foreach (Mitarbeiter mitarbeiter in mitarbeiterListe)
+                        foreach (Arbeiter mitarbeiter in mitarbeiterListe)
                         {
                             Console.WriteLine($"{mitarbeiter.Name}: {mitarbeiter.Urlaub} Tage Resturlaub ({mitarbeiter.GetType().Name})");
                         }
@@ -158,28 +172,45 @@ namespace Zeiterfassung
                                 Console.WriteLine("");
                                 Console.Write("Name: ");
                                 string name = Console.ReadLine();
+                                Console.Write("Vorname: ");
+                                string vorname = Console.ReadLine();
+                                Console.Write("Nachname: ");
+                                string nachname = Console.ReadLine();
                                 Console.Write("Alter: ");
                                 int alter = int.Parse(Console.ReadLine());
-                                Console.Write("Arbeit: ");
-                                string arbeit = Console.ReadLine();
+                                Console.WriteLine("Funktion auswählen:");
+                                for (int i = 0; i < funktionsListe.Count; i++)
+                                {
+                                    Console.WriteLine($"{i + 1}. {funktionsListe[i].Bezeichnung}");
+                                }
+                                Console.Write("Funktions-Auswahl: ");
+                                int funktionAuswahl = int.Parse(Console.ReadLine()) - 1;
+                                Funktion funktion = funktionsListe[funktionAuswahl];
                                 Console.Write("Urlaub: ");
                                 int urlaub = int.Parse(Console.ReadLine());
                                 Console.Write("Arbeitsstunden: ");
                                 int arbeitsstunden = int.Parse(Console.ReadLine());
-                                Mitarbeiter mitarbeiter = new Mitarbeiter(name, alter, arbeit, urlaub, arbeitsstunden);
+                                Arbeiter mitarbeiter = new Arbeiter(vorname, nachname, alter,null, funktion);//TODO ADD CEO AS DEFAULT!!!!!!!!!!!!!!!!!!;
                                 mitarbeiter.Anzeige(); // Anwendung der Methode "Anzeige()" des Interfaces "IAnzeige" auf das Mitarbeiter-Objekt
                                 mitarbeiterListe.Add(mitarbeiter);
                                 Console.WriteLine("Mitarbeiter hinzugefügt.");
+                                Console.Clear();
                                 break;
                             case 2:
-                                Console.WriteLine("Lernender Hinzufügen");
-                                Console.WriteLine("");
-                                Console.Write("Name des Lernenden: ");
-                                string lernenderName = Console.ReadLine();
+                                Console.Write("Vorname des Lernenden: ");
+                                string lernenderVorName = Console.ReadLine();
+                                Console.Write("Nachname des Lernenden: ");
+                                string lernenderNachName = Console.ReadLine();
                                 Console.Write("Alter des Lernenden: ");
                                 int lernenderAlter = int.Parse(Console.ReadLine());
-                                Console.Write("Arbeit des Lernenden: ");
-                                string lernenderArbeit = Console.ReadLine();
+                                Console.WriteLine("Arbeit auswählen:");
+                                for (int i = 0; i < funktionsListe.Count; i++)
+                                {
+                                    Console.WriteLine($"{i + 1}. {funktionsListe[i].Bezeichnung}");
+                                }
+                                Console.Write("Funktions-Auswahl: ");
+                                int lernenderArbeitAuswahl = int.Parse(Console.ReadLine()) - 1;
+                                Funktion lernenderArbeit = funktionsListe[lernenderArbeitAuswahl];
                                 Console.Write("Urlaub des Lernenden: ");
                                 int lernenderUrlaub = int.Parse(Console.ReadLine());
                                 Console.Write("Arbeitsstunden des Lernenden: ");
@@ -188,33 +219,42 @@ namespace Zeiterfassung
                                 Console.WriteLine("Ausbilder auswählen:");
                                 for (int i = 0; i < ausbilderListe.Count; i++)
                                 {
-                                    Console.WriteLine($"{i + 1}. {ausbilderListe[i].Name}");
+                                    Console.WriteLine($"{i + 1}. {ausbilderListe[i].GanzerName}");
                                 }
                                 Console.Write("Ausbilder-Auswahl: ");
                                 int ausbilderAuswahl = int.Parse(Console.ReadLine()) - 1;
                                 Ausbilder ausbilder = ausbilderListe[ausbilderAuswahl];
 
-                                Lernender lernender = new Lernender(lernenderName, lernenderAlter, lernenderArbeit, lernenderUrlaub, lernenderArbeitsstunden, ausbilder);
+                                Lernender lernender = new Lernender(lernenderVorName, lernenderNachName, lernenderAlter, ausbilder, lernenderArbeit);
                                 lernender.Anzeige(); // Anwendung der Methode "Anzeige()" des Interfaces "IAnzeige" auf das Lernender-Objekt
                                 lernenderListe.Add(lernender);
-                                ausbilder.LernenderListe.Add(lernender);
+                                Console.Clear();
                                 break;
                             case 3:
                                 Console.WriteLine("Ausbilder Hinzufügen");
                                 Console.WriteLine("");
                                 // Ausbilder hinzufügen
-                                Console.Write("Name: ");
-                                string Ausbildername = Console.ReadLine();
+                                Console.Write("Vorname: ");
+                                string Ausbildervorname = Console.ReadLine();
+                                Console.Write("Nachname: ");
+                                string Ausbildernachname = Console.ReadLine();
                                 Console.Write("Alter: ");
                                 int Ausbilderalter = int.Parse(Console.ReadLine());
-                                Console.Write("Arbeit: ");
-                                string Ausbilderarbeit = Console.ReadLine();
+                                Console.WriteLine("Arbeit auswählen:");
+                                for (int i = 0; i < funktionsListe.Count; i++)
+                                {
+                                    Console.WriteLine($"{i + 1}. {funktionsListe[i].Bezeichnung}");
+                                }
+                                Console.Write("Funktions-Auswahl: ");
+                                int ausbilderArbeitAuswahl = int.Parse(Console.ReadLine()) - 1;
+                                Funktion Ausbilderarbeit = funktionsListe[ausbilderArbeitAuswahl];
                                 Console.Write("Urlaub: ");
                                 int Ausbilderurlaub = int.Parse(Console.ReadLine());
                                 Console.Write("Arbeitsstunden: ");
                                 int Ausbilderarbeitsstunden = int.Parse(Console.ReadLine());
-                                Ausbilder newausbilder = new Ausbilder(Ausbildername, Ausbilderalter, Ausbilderarbeit, Ausbilderurlaub, Ausbilderarbeitsstunden);
+                                Ausbilder newausbilder = new Ausbilder(Ausbildervorname,Ausbildernachname,Ausbilderalter,null,Ausbilderarbeit);//TODO: CEO!!!!!!!!!!!!!!!!!!!!
                                 ausbilderListe.Add(newausbilder);
+                                Console.Clear();
                                 break;
                             default:
                                 Console.WriteLine("Ungültige Auswahl. Drücke Enter um zu verlassen.");
@@ -222,6 +262,7 @@ namespace Zeiterfassung
                                 Console.Clear();
                                 break;
                             case 9:
+                                Console.Clear();
                                 break;
                         }
                         break;
@@ -243,7 +284,7 @@ namespace Zeiterfassung
                             Console.WriteLine("");
                             // Durchschnittsalter aller Mitarbeiter
                             int summeAlter = 0;
-                            foreach (Mitarbeiter mitarbeiter in mitarbeiterListe)
+                            foreach (Arbeiter mitarbeiter in mitarbeiterListe)
                             {
                                 summeAlter += mitarbeiter.Alter;
                             }
@@ -256,7 +297,7 @@ namespace Zeiterfassung
                             Console.WriteLine("");
                             // Anzahl der Mitarbeiter pro Beruf
                             var gruppierung = from mitarbeiter in mitarbeiterListe
-                                              group mitarbeiter by mitarbeiter.Arbeit into gruppe
+                                              group mitarbeiter by mitarbeiter.Funktion into gruppe
                                               select new { Arbeit = gruppe.Key, Anzahl = gruppe.Count() };
                             foreach (var g in gruppierung)
                             {
@@ -269,7 +310,7 @@ namespace Zeiterfassung
                             Console.WriteLine("");
                             // Durchschnittliche Arbeitszeit aller Mitarbeiter
                             int summeArbeitsstunden = 0;
-                            foreach (Mitarbeiter mitarbeiter in mitarbeiterListe)
+                            foreach (Arbeiter mitarbeiter in mitarbeiterListe)
                             {
                                 summeArbeitsstunden += mitarbeiter.Arbeitsstunden;
                             }
@@ -282,7 +323,7 @@ namespace Zeiterfassung
                             Console.WriteLine("");
                             // Durchschnittliche Arbeitszeit pro Beruf
                             var gruppierung = from mitarbeiter in mitarbeiterListe
-                                              group mitarbeiter by mitarbeiter.Arbeit into gruppe
+                                              group mitarbeiter by mitarbeiter.Funktion into gruppe
                                               select new { Arbeit = gruppe.Key, Arbeitsstunden = gruppe.Average(m => m.Arbeitsstunden) };
                             foreach (var g in gruppierung)
                             {
@@ -295,6 +336,7 @@ namespace Zeiterfassung
                             Console.ReadKey();
                             Console.Clear();
                         }
+                        Console.Clear();
                         break;
                     case 5:
                         Console.Clear();
@@ -302,12 +344,13 @@ namespace Zeiterfassung
                         Console.WriteLine("Mitarbeiter auswählen:");
                         for (int i = 0; i < mitarbeiterListe.Count; i++)
                         {
-                            Console.WriteLine($"{i + 1}. {mitarbeiterListe[i].Name}");
+                            Console.WriteLine($"{i + 1}. {mitarbeiterListe[i].GanzerName}");
                         }
                         Console.Write("Auswahl: ");
                         int mitarbeiterLoeschenAuswahl = int.Parse(Console.ReadLine()) - 1;
                         mitarbeiterListe.RemoveAt(mitarbeiterLoeschenAuswahl);
                         Console.WriteLine("Mitarbeiter gelöscht.");
+                        Console.Clear();
                         break;
                     case 6:
                         Console.Clear();
@@ -316,7 +359,7 @@ namespace Zeiterfassung
                         int t = 1;
                         foreach (Lernender lernender in lernenderListe)
                         {
-                            Console.WriteLine($"{t}. {lernender.Name} (Ausbilder: {lernender.Ausbilder.Name})");
+                            Console.WriteLine($"{t}. {lernender.GanzerName} (Ausbilder: {lernender.Ausbilder.GanzerName})");
                             t++;
                         }
                         Console.Write("Auswahl: ");
@@ -397,12 +440,14 @@ namespace Zeiterfassung
                             JSONHandling.MitarbeiterList = mitarbeiterListe;
                             JSONHandling.AusbilderList = ausbilderListe;
                             JSONHandling.LernenderList = lernenderListe;
+                            JSONHandling.FunktionsListe = funktionsListe;
 
                             string json = JsonConvert.SerializeObject(JSONHandling);
                             File.WriteAllText(dateiname, json);
                             Console.WriteLine($"Mitarbeiter-Daten in JSON-Datei \"{dateiname}\" gespeichert.");
 
                             Console.ReadKey();
+                            Console.Clear();
                         }
                         break;
                     case 0:

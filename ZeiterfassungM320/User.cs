@@ -4,13 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zeiterfassungsprogramm
-{
-    public abstract class User { //base class for users
+namespace Zeiterfassungsprogramm {
 
-        private string username;
-        private string vorname;
-        private string nachname;
+    //Basisklasse für alle Benutzer
+    public abstract class User {
+
+        public string Username { get; set; }
+        public string Vorname { get; set; }
+        public string Nachname { get; set; }
+        public string GanzerName { get { return Vorname+" "+Nachname; } }
+
+        // Konstruktoren
+        public User(string username) {
+            Username = username;
+        }
+        public User(string username,string vorname,string nachname) {
+            Username = username;
+            Vorname = vorname;
+            Nachname = nachname;
+        }
 
     }
 }

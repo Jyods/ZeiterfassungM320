@@ -2,7 +2,7 @@
 using Zeiterfassung;
 using Zeiterfassungsprogramm;
 
-namespace Zeiterfassungsprogramm
+namespace Zeiterfassungsprogramm_old
 {
     public class Mitarbeiter : Person
     {

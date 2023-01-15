@@ -8,8 +8,14 @@ namespace Zeiterfassungsprogramm
 {
     public class Funktion {
 
-        private string bezeichnung;
-        private string lohn;
+        public string Bezeichnung { get; set; }
+        public int Lohn { get; set; }
+
+        // Konstruktor
+        public Funktion(string bezeichnung, int lohn) {
+            Bezeichnung = bezeichnung;
+            Lohn = lohn;
+        }
 
     }
 }

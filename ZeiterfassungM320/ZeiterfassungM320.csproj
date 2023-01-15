@@ -51,6 +51,7 @@
     <Compile Include="Ausbilder.cs" />
     <Compile Include="Funktion.cs" />
     <Compile Include="IAnzeige.cs" />
+    <Compile Include="IAdministrativ.cs" />
     <Compile Include="IMitarbeiter.cs" />
     <Compile Include="JSONHandling.cs" />
     <Compile Include="Lernender.cs" />

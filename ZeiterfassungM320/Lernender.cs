@@ -4,15 +4,26 @@ using Zeiterfassungsprogramm;
 
 namespace Zeiterfassungsprogramm
 {
-    public class Lernender : Mitarbeiter
+    public class Lernender : Arbeiter //Spezialisierte Klasse für Lernende. Sie haben spezielle Regelungen.
     {
+        // mem
+        int _Ferienguthaben = 0;
+
+        // mmeth
         public Ausbilder Ausbilder { get; set; }
+        public override int Ferienguthaben { get { return _Ferienguthaben; } set { _Ferienguthaben = Math.Max(value, 40); } }
 
-        public Lernender(string name, int alter, string arbeit, int urlaub, int arbeitsstunden, Ausbilder ausbilder) : base(name, alter, arbeit, urlaub, arbeitsstunden)
+        public int Resturlaub { get; private set; }
+
+        //Konstruktor
+        public Lernender(string vorname, string nachname, int alter, Ausbilder ausbilder, Funktion ausbildung) : base(vorname, nachname, alter, ausbilder, ausbildung,40)
         {
-            this.Ausbilder = ausbilder;
+            Ausbilder = ausbilder;
         }
-
+        public Lernender(string vorname, string nachname, int alter, Ausbilder ausbilder, Funktion ausbildung, int urlaub) : base(vorname, nachname, alter, ausbilder, ausbildung, urlaub)
+        {
+            Ausbilder = ausbilder;
+        }
         public override int ArbeitsstundenModifizieren(int stunden)
         {
             if (stunden > 10)
@@ -29,14 +40,13 @@ namespace Zeiterfassungsprogramm
 
         public void UrlaubHinzufügen(int tage)
         {
-            this.Urlaub += tage;
+            this.Resturlaub += tage;
         }
 
         public override void Anzeige()
         {
             base.Anzeige();
-            Console.WriteLine($"Ausbilder: {Ausbilder.Name}");
+            Console.WriteLine($"Ausbilder: {Ausbilder.GanzerName}");
         }
     }
-
 }
