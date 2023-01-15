@@ -49,6 +49,7 @@
     <Compile Include="Admin.cs" />
     <Compile Include="Arbeiter.cs" />
     <Compile Include="Ausbilder.cs" />
+    <Compile Include="CEO.cs" />
     <Compile Include="Funktion.cs" />
     <Compile Include="IAnzeige.cs" />
     <Compile Include="IAdministrativ.cs" />

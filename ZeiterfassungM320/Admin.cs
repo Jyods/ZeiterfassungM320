@@ -29,10 +29,12 @@ namespace Zeiterfassungsprogramm
         //Methoden
         public void SetFerien(Arbeiter arbeiter,int ferientage) {
             arbeiter.SetFerienguthaben(ferientage);
+            Console.WriteLine($"{GetGanzerName()} hat das Ferienguthaben {arbeiter.GetGanzerName()} auf {ferientage} gesetzt.");
         }
 
         public void SetLohnzuschlag(Arbeiter arbeiter,int zuschlag) {
             arbeiter.SetLohnZuschlag(zuschlag);
+            Console.WriteLine($"{GetGanzerName()} hat {arbeiter.GetGanzerName()} einen Lohnzuschlag von {zuschlag} gegeben.");
         }
     
     }
