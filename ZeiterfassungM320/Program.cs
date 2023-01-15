@@ -92,7 +92,6 @@ namespace Zeiterfassung
                                 Console.Write("Anzahl der Urlaubstage: ");
                                 int urlaubstage = int.Parse(Console.ReadLine());
                                 mitarbeiterListe[mitarbeiterAuswahl].UrlaubAbziehen(urlaubstage);
-                                Console.ReadKey();
                             }
                             else
                                 Console.WriteLine("Ungültige Eingabe: Abgebrochen");
@@ -138,18 +137,20 @@ namespace Zeiterfassung
                         // Mitarbeiter anzeigen
                         foreach (Arbeiter mitarbeiter in mitarbeiterListe)
                         {
-                            Console.WriteLine($"{mitarbeiter.GanzerName}: {mitarbeiter.Ferienguthaben} Tage Resturlaub ({mitarbeiter.GetType().Name})");
+                            Console.WriteLine($"{mitarbeiter.Name}: {mitarbeiter.Urlaub} Tage Resturlaub ({mitarbeiter.GetType().Name})");
                         }
                         foreach (Ausbilder ausbilder in ausbilderListe)
                         {
-                            Console.WriteLine($"{ausbilder.GanzerName}: {ausbilder.Ferienguthaben} Tage Resturlaub ({ausbilder.GetType().Name})");
+                            Console.WriteLine($"{ausbilder.Name}: {ausbilder.Urlaub} Tage Resturlaub ({ausbilder.GetType().Name})");
                         }
                         foreach (Lernender lernender in lernenderListe)
                         {
-                            Console.WriteLine($"{lernender.GanzerName}: {lernender.Ferienguthaben} Tage Resturlaub ({lernender.GetType().Name})");
+                            Console.WriteLine($"{lernender.Name}: {lernender.Urlaub} Tage Resturlaub ({lernender.GetType().Name})");
                         }
-
-
+                        Console.WriteLine("");
+                        Console.WriteLine($"Drücke Enter um zu verlassen.");
+                        Console.ReadKey();
+                        Console.Clear();
                         break;
 
                     // Mitarbeiter Hinzufügen
@@ -162,10 +163,15 @@ namespace Zeiterfassung
                         Console.WriteLine("9. Zurück");
                         int mitarbeiterTyp = int.Parse(Console.ReadLine());
                         Console.Clear();
+
                         switch (mitarbeiterTyp)
                         {
                             case 1:
                                 // Mitarbeiter hinzufügen
+                                Console.WriteLine("Mitarbeiter Hinzufügen");
+                                Console.WriteLine("");
+                                Console.Write("Name: ");
+                                string name = Console.ReadLine();
                                 Console.Write("Vorname: ");
                                 string vorname = Console.ReadLine();
                                 Console.Write("Nachname: ");
@@ -225,6 +231,8 @@ namespace Zeiterfassung
                                 Console.Clear();
                                 break;
                             case 3:
+                                Console.WriteLine("Ausbilder Hinzufügen");
+                                Console.WriteLine("");
                                 // Ausbilder hinzufügen
                                 Console.Write("Vorname: ");
                                 string Ausbildervorname = Console.ReadLine();
@@ -249,8 +257,9 @@ namespace Zeiterfassung
                                 Console.Clear();
                                 break;
                             default:
+                                Console.WriteLine("Ungültige Auswahl. Drücke Enter um zu verlassen.");
+                                Console.ReadKey();
                                 Console.Clear();
-                                Console.WriteLine("Ungültige Auswahl.");
                                 break;
                             case 9:
                                 Console.Clear();
@@ -271,6 +280,8 @@ namespace Zeiterfassung
                         Console.Clear();
                         if (statistikAuswahl == 1)
                         {
+                            Console.WriteLine("Durchschnittsalter aller Mitarbeiter");
+                            Console.WriteLine("");
                             // Durchschnittsalter aller Mitarbeiter
                             int summeAlter = 0;
                             foreach (Arbeiter mitarbeiter in mitarbeiterListe)
@@ -282,6 +293,8 @@ namespace Zeiterfassung
                         }
                         else if (statistikAuswahl == 2)
                         {
+                            Console.WriteLine("Anzahl der Mitarbeiter pro Beruf");
+                            Console.WriteLine("");
                             // Anzahl der Mitarbeiter pro Beruf
                             var gruppierung = from mitarbeiter in mitarbeiterListe
                                               group mitarbeiter by mitarbeiter.Funktion into gruppe
@@ -293,6 +306,8 @@ namespace Zeiterfassung
                         }
                         else if (statistikAuswahl == 3)
                         {
+                            Console.WriteLine("Durchschnittliche Arbeitszeit aller Mitarbeiter");
+                            Console.WriteLine("");
                             // Durchschnittliche Arbeitszeit aller Mitarbeiter
                             int summeArbeitsstunden = 0;
                             foreach (Arbeiter mitarbeiter in mitarbeiterListe)
@@ -304,6 +319,8 @@ namespace Zeiterfassung
                         }
                         else if (statistikAuswahl == 4)
                         {
+                            Console.WriteLine("Durchschnittliche Arbeitszeit pro Beruf");
+                            Console.WriteLine("");
                             // Durchschnittliche Arbeitszeit pro Beruf
                             var gruppierung = from mitarbeiter in mitarbeiterListe
                                               group mitarbeiter by mitarbeiter.Funktion into gruppe
@@ -312,6 +329,12 @@ namespace Zeiterfassung
                             {
                                 Console.WriteLine($"{g.Arbeit}: {g.Arbeitsstunden:F2} Stunden");
                             }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ungültige Auswahl. Drücke Enter um zu verlassen.");
+                            Console.ReadKey();
+                            Console.Clear();
                         }
                         Console.Clear();
                         break;
