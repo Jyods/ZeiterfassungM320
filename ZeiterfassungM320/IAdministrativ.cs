@@ -12,12 +12,10 @@ namespace Zeiterfassungsprogramm
 
         int PermissionLevel { get; set; }
 
+        //Methoden
         void SetFerien(Arbeiter arbeiter,int ferientage);
         void SetLohnzuschlag(Arbeiter arbeiter,int zuschlag);
 
     }
 
-    //IMPORTANT TODO: 
-    //(maybe) anstatt administrativ Interface ein interface für ZEITERFASSUNG machen!!! MAKES MORE SENSE! Arbeiter implements dann IZeiterfassung
-    //Klasse für CEO machen
 }

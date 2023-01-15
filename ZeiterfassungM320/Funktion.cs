@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Zeiterfassungsprogramm
 {
+    //Klasse für Funktionien/Berufe
     public class Funktion {
 
         public string Bezeichnung { get; set; }

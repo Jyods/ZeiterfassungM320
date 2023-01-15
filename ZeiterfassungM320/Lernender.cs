@@ -4,49 +4,50 @@ using Zeiterfassungsprogramm;
 
 namespace Zeiterfassungsprogramm
 {
-    public class Lernender : Arbeiter //Spezialisierte Klasse für Lernende. Sie haben spezielle Regelungen.
+    //Spezialisierte Klasse für Lernende. Sie haben spezielle Regelungen.
+    public class Lernender : Arbeiter
     {
-        // mem
-        int _Ferienguthaben = 0;
-
-        // mmeth
-        public Ausbilder Ausbilder { get; set; }
-        public override int Ferienguthaben { get { return _Ferienguthaben; } set { _Ferienguthaben = Math.Max(value, 40); } }
-
-        public int Resturlaub { get; private set; }
+        private Ausbilder _ausbilder;
 
         //Konstruktor
-        public Lernender(string vorname, string nachname, int alter, Ausbilder ausbilder, Funktion ausbildung) : base(vorname, nachname, alter, ausbilder, ausbildung,40)
-        {
-            Ausbilder = ausbilder;
+        public Lernender(string vorname, string nachname, int alter, Ausbilder ausbilder, Funktion ausbildung) : base(vorname, nachname, alter, ausbilder, ausbildung,40) {
+            SetAusbilder(ausbilder);
         }
-        public Lernender(string vorname, string nachname, int alter, Ausbilder ausbilder, Funktion ausbildung, int urlaub) : base(vorname, nachname, alter, ausbilder, ausbildung, urlaub)
-        {
-            Ausbilder = ausbilder;
-        }
-        public override int ArbeitsstundenModifizieren(int stunden)
-        {
-            if (stunden > 10)
-            {
-                Console.WriteLine("Lernende dürfen maximal 10 Arbeitsstunden haben. Bitte geben Sie eine gültige Anzahl ein.");
-                Console.ReadKey();
-                return this.Arbeitsstunden;
-            }
-            else
-            {
-                return base.ArbeitsstundenModifizieren(stunden);
-            }
+        public Lernender(string vorname, string nachname, int alter, Ausbilder ausbilder, Funktion ausbildung, int ferientage) : base(vorname, nachname, alter, ausbilder, ausbildung, ferientage) {
+            SetAusbilder(ausbilder);
         }
 
-        public void UrlaubHinzufügen(int tage)
-        {
-            this.Resturlaub += tage;
-        }
-
+        //Methoden
         public override void Anzeige()
         {
             base.Anzeige();
-            Console.WriteLine($"Ausbilder: {Ausbilder.GanzerName}");
+            Console.WriteLine($"Ausbilder: {GetAusbilder().GetGanzerName()}");
         }
+
+        #region Getter & Setter
+        //Ausbilder
+        public Arbeiter GetAusbilder() { return _ausbilder; } //Gibt den Ausbilder als Arbeiter zurück -> Polymorphie
+        public void SetAusbilder(Ausbilder ausbilder) { _ausbilder = ausbilder; }
+
+        //Ferienguthaben
+        public override void SetFerienguthaben(int guthaben) {
+            if(guthaben < 35) {
+                Console.WriteLine("Lernende müssen mindestens 35 Ferientage haben!");
+                Console.ReadKey();
+            } else {
+                base.SetFerienguthaben(guthaben);
+            }
+        }
+
+        //Arbeitsstunden
+        public override void SetArbeitsstunden(int stunden) {
+            if(stunden > 10) {
+                Console.WriteLine("Lernende dürfen maximal 10 Arbeitsstunden haben!");
+                Console.ReadKey();
+            } else {
+                base.SetArbeitsstunden(stunden);
+            }
+        }
+        #endregion
     }
 }

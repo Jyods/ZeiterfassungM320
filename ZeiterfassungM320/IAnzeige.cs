@@ -8,8 +8,6 @@ namespace Zeiterfassungsprogramm
 {
     interface IAnzeige
     {
-
-        //  Zitat Chatbot GPT:
         //  Das Interface IAnzeige ermöglicht es, dass jede Klasse, die es implementiert, über eine Methode namens "Anzeige()" verfügt.
         //  Diese Methode kann dazu verwendet werden, um die Eigenschaften eines Objekts der Klasse anzuzeigen.
         //  Das Interface ist eine Art "Vereinbarung" darüber, dass jede Klasse, die es implementiert, eine Methode "Anzeige()" besitzen sollte, die bestimmte Informationen über das Objekt ausgibt.
