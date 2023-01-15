@@ -4,15 +4,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
-using Zeiterfassungsprogramm;
 
-namespace Zeiterfassung
-{
+namespace Zeiterfassungsprogramm {
     class Program
     {
         static void Main(string[] args)
         {
-            // Andere Listen erstellen
+            // Listen erstellen
             List<Funktion> funktionsListe = new List<Funktion>();
             List<Ausbilder> ausbilderListe = new List<Ausbilder>();
             List<Lernender> lernenderListe = new List<Lernender>();

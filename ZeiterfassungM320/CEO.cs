@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Zeiterfassungsprogramm {
+
+    //Klasse für den CEO. Administrative funktionen, ohne zeiterfassung
     public class CEO:User, IAdministrativ {
 
         public int PermissionLevel { get; set; }
