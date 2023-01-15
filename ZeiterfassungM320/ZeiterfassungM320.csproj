@@ -49,12 +49,12 @@
     <Compile Include="Admin.cs" />
     <Compile Include="Arbeiter.cs" />
     <Compile Include="Ausbilder.cs" />
+    <Compile Include="CEO.cs" />
     <Compile Include="Funktion.cs" />
+    <Compile Include="IAnzeige.cs" />
     <Compile Include="IAdministrativ.cs" />
-    <Compile Include="IMitarbeiter.cs" />
+    <Compile Include="JSONHandling.cs" />
     <Compile Include="Lernender.cs" />
-    <Compile Include="Mitarbeiter.cs" />
-    <Compile Include="Person.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

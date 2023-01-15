@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zeiterfassung {
-
+namespace Zeiterfassungsprogramm
+{
     //Klasse für Funktionien/Berufe
     public class Funktion {
 
