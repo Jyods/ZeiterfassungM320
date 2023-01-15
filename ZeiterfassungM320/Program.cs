@@ -40,7 +40,7 @@ namespace Zeiterfassungsprogramm {
                 Console.Clear();
                 switch (auswahl) {
                     // Urlaub verwalten
-                    case 1:
+                case 1:
                     Console.Clear();
                     Console.WriteLine("1. Urlaub abziehen");
                     Console.WriteLine("2. Urlaub hinzufügen");
@@ -57,7 +57,7 @@ namespace Zeiterfassungsprogramm {
                             // Anzahl der Urlaubstage abziehen
                             Console.Write("Anzahl der abzuziehenden Urlaubstage: ");
                             int urlaubstage = int.Parse(Console.ReadLine());
-                            arbeiter.UrlaubAbziehen(urlaubstage);
+                            arbeiter.SetFerienguthaben(arbeiter.GetFerienguthaben()-urlaubstage);
                         }
                         else
                             Console.WriteLine("Ungültige Eingabe: Abgebrochen");
@@ -70,9 +70,8 @@ namespace Zeiterfassungsprogramm {
                             // Anzahl der Urlaubstage hinzufügen
                             Console.Write("Anzahl der Urlaubstage: ");
                             int urlaubstage = int.Parse(Console.ReadLine());
-                            arbeiter.UrlaubHinzufügen(urlaubstage);
+                            arbeiter.SetFerienguthaben(arbeiter.GetFerienguthaben()+urlaubstage);
                             //Console.WriteLine($"{ur mitarbeiterListe[mitarbeiterAuswahl].UrlaubAbziehen(urlaubstage);
-                            Console.WriteLine($"{urlaubstage} Urlaubstage wurden von {arbeiter.GetGanzerName()} abgezogen.");
                         }
                         else
                             Console.WriteLine("Ungültige Eingabe: Abgebrochen");
@@ -238,6 +237,8 @@ namespace Zeiterfassungsprogramm {
                         }
                         double durchschnittsalter = (double)summeAlter / arbeiterListe.Count;
                         Console.WriteLine($"Durchschnittsalter: {durchschnittsalter:F2}");
+                        Console.WriteLine("Drücke Enter um zu verlassen");
+                        Console.ReadLine();
                     }
                     else if (statistikAuswahl == 2)
                     {
@@ -245,12 +246,14 @@ namespace Zeiterfassungsprogramm {
                         Console.WriteLine("");
                         // Anzahl der Mitarbeiter pro Beruf
                         var gruppierung = from mitarbeiter in arbeiterListe
-                                            group mitarbeiter by mitarbeiter.GetFunktion() into gruppe
+                                            group mitarbeiter by mitarbeiter.GetFunktion().Bezeichnung into gruppe
                                             select new { Arbeit = gruppe.Key, Anzahl = gruppe.Count() };
                         foreach (var g in gruppierung)
                         {
                             Console.WriteLine($"{g.Arbeit}: {g.Anzahl}");
                         }
+                        Console.WriteLine("Drücke Enter um zu verlassen");
+                        Console.ReadLine();
                     }
                     else if (statistikAuswahl == 3)
                     {
@@ -264,6 +267,8 @@ namespace Zeiterfassungsprogramm {
                         }
                         double durchschnittsarbeitszeit = (double)summeArbeitsstunden / arbeiterListe.Count;
                         Console.WriteLine($"Durchschnittliche Arbeitszeit: {durchschnittsarbeitszeit:F2} Stunden");
+                        Console.WriteLine("Drücke Enter um zu verlassen");
+                        Console.ReadLine();
                     }
                     else if (statistikAuswahl == 4)
                     {
@@ -271,12 +276,14 @@ namespace Zeiterfassungsprogramm {
                         Console.WriteLine("");
                         // Durchschnittliche Arbeitszeit pro Beruf
                         var gruppierung = from mitarbeiter in arbeiterListe
-                                            group mitarbeiter by mitarbeiter.GetFunktion() into gruppe
+                                            group mitarbeiter by mitarbeiter.GetFunktion().Bezeichnung into gruppe
                                             select new { Arbeit = gruppe.Key, Arbeitsstunden = gruppe.Average(m => m.GetArbeitsstunden()) };
                         foreach (var g in gruppierung)
                         {
                             Console.WriteLine($"{g.Arbeit}: {g.Arbeitsstunden:F2} Stunden");
                         }
+                        Console.WriteLine("Drücke Enter um zu verlassen");
+                        Console.ReadLine();
                     }
                     else
                     {
@@ -461,7 +468,7 @@ namespace Zeiterfassungsprogramm {
             int mitarbeiterAuswahl = int.Parse(Console.ReadLine()) - 1;
 
             //Arbeiter zurückgeben
-            if(mitarbeiterAuswahl > 0 && mitarbeiterAuswahl < list.Count) {
+            if(mitarbeiterAuswahl >= 0 && mitarbeiterAuswahl < list.Count) {
                 return list[mitarbeiterAuswahl];
             } else {
                 return null;

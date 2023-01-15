@@ -32,29 +32,6 @@ namespace Zeiterfassungsprogramm
         }
 
         //Methoden
-        public virtual void UrlaubAbziehen(int anzahlTage)
-        {
-            if ((GetFerienguthaben() - anzahlTage) < 0)
-            {
-                Console.Clear();
-                // Mitarbeiter kann nicht in den Minus-Bereich gehen
-                Console.WriteLine("Fehler: Mitarbeiter kann nicht in den Minus-Bereich gehen." + (GetFerienguthaben() - anzahlTage));
-            }
-            else
-            {
-                Console.Clear();
-                // Urlaubstage abziehen
-                SetFerienguthaben(GetFerienguthaben() - anzahlTage);
-                Console.WriteLine($"{anzahlTage} Urlaubstage wurden von {GetGanzerName()} abgezogen.");
-                Console.WriteLine($"Resturlaub: " + GetFerienguthaben());
-            }
-        }
-
-        public virtual void UrlaubHinzufügen(int anzahlTage)
-        {
-            SetFerienguthaben(GetFerienguthaben()+anzahlTage);
-        }
-
         public virtual void Anzeige()
         {
             Console.WriteLine($"Name: {GetGanzerName()}");
@@ -87,7 +64,6 @@ namespace Zeiterfassungsprogramm
         public virtual void SetFerienguthaben(int guthaben) {
             if(guthaben < 30) {
                 Console.WriteLine("Arbeiter müssen mindestens 30 Ferientage haben!");
-                Console.ReadKey();
             } else {
                 _ferienguthaben = guthaben;
             }
