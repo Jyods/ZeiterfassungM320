@@ -57,6 +57,7 @@ namespace Zeiterfassungsprogramm
 			if(zuschlag >= 0) {
                 _lohnZuschlag = zuschlag;
             } else {
+                _lohnZuschlag = 0;
                 Console.WriteLine("Lohnzuschlag kann nicht negativ sein!");
 			}
         }
@@ -70,6 +71,7 @@ namespace Zeiterfassungsprogramm
         public virtual void SetFerienguthaben(int guthaben) {
             if(guthaben < 30) {
                 Console.WriteLine("Arbeiter müssen mindestens 30 Ferientage haben!");
+                _ferienguthaben = 30;
             } else {
                 _ferienguthaben = guthaben;
             }

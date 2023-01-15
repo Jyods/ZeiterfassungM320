@@ -10,45 +10,28 @@ namespace ZeiterfassungsprogrammTests {
 	class TestLernender {
 
 		// Ferien
-		[Test]
-		public void TestSetFerien_Valid() {
+		[TestCase(35, 40, ExpectedResult =40)]
+		[TestCase(20, 45, ExpectedResult =45)]
+		[TestCase(50, 20, ExpectedResult =35)]
+		public int TestSetFerien(int nA, int nB) {
 			//Arrange
-			Lernender l = new Lernender("tester","test",10,null,null,35);
+			Lernender l = new Lernender("tester","test",16,null,null,nA);
 			//Act
-			l.SetFerienguthaben(40);
+			l.SetFerienguthaben(nB);
 			//Assert
-			Assert.AreEqual(40,l.GetFerienguthaben());
-		}
-
-		[Test]
-		public void TestSetFerien_Invalid() {
-			//Arrange
-			Lernender l = new Lernender("tester","test",10,null,null,40);
-			//Act
-			l.SetFerienguthaben(20);
-			//Assert
-			Assert.AreEqual(40,l.GetFerienguthaben());
+			return l.GetFerienguthaben();
 		}
 
 		// Arbeitsstunden
-		[Test]
-		public void TestSetArbeitsstunden_Valid() {
+		[TestCase(5, ExpectedResult =5)]
+		[TestCase(15, ExpectedResult =10)]
+		public int TestSetArbeitsstunden(int nA) {
 			//Arrange
-			Lernender l = new Lernender("tester","test",10,null,null);
+			Lernender l = new Lernender("tester","test",16,null,null);
 			//Act
-			l.SetArbeitsstunden(5);
+			l.SetArbeitsstunden(nA);
 			//Assert
-			Assert.AreEqual(5,l.GetArbeitsstunden());
-		}
-
-		[Test]
-		public void TestSetArbeitsstunden_Invalid() {
-			//Arrange
-			Lernender l = new Lernender("tester","test",10,null,null);
-			//Act
-			l.SetArbeitsstunden(15);
-			//Assert
-			Assert.AreEqual(0,l.GetArbeitsstunden());
+			return l.GetArbeitsstunden();
 		}
 
 	}

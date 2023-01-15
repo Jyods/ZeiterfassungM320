@@ -34,6 +34,7 @@ namespace Zeiterfassungsprogramm
         //Ferienguthaben
         public override void SetFerienguthaben(int guthaben) {
             if(guthaben < 35) {
+                base.SetFerienguthaben(35);
                 Console.WriteLine("Lernende müssen mindestens 35 Ferientage haben!");
                 Console.ReadKey();
             } else {
@@ -44,6 +45,7 @@ namespace Zeiterfassungsprogramm
         //Arbeitsstunden
         public override void SetArbeitsstunden(int stunden) {
             if(stunden > 10) {
+                base.SetArbeitsstunden(10);
                 Console.WriteLine("Lernende dürfen maximal 10 Arbeitsstunden haben!");
                 Console.ReadKey();
             } else {
