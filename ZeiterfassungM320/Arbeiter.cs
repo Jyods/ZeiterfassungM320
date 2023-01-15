@@ -53,7 +53,13 @@ namespace Zeiterfassungsprogramm
 
         //Lohnzuschlag;
         public virtual int GetLohnZuschlag() { return _lohnZuschlag; }
-        public virtual void SetLohnZuschlag(int zuschlag) { _lohnZuschlag = zuschlag; }
+        public virtual void SetLohnZuschlag(int zuschlag) {
+			if(zuschlag >= 0) {
+                _lohnZuschlag = zuschlag;
+            } else {
+                Console.WriteLine("Lohnzuschlag kann nicht negativ sein!");
+			}
+        }
 
         //Alter;
         public virtual int GetAlter() { return _alter; }
