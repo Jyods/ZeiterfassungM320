@@ -54,7 +54,6 @@
     <Compile Include="IAdministrativ.cs" />
     <Compile Include="JSONHandling.cs" />
     <Compile Include="Lernender.cs" />
-    <Compile Include="Person.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
